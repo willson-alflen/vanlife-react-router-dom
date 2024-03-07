@@ -8,11 +8,12 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2rem;
 `
 
 export const NavBrand = styled.span`
   color: #000000;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
 `
 

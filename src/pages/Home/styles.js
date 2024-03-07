@@ -8,12 +8,17 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 174px);
+  min-height: calc(100vh - 184px);
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.46)),
     url(${HomeHeroBg});
-  background-size: cover;
   background-position: center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   color: #fff;
+  border: none;
 `
 
 export const Title = styled.h1`

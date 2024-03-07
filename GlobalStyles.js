@@ -20,6 +20,11 @@ const GlobalStyle = createGlobalStyle`
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `
 
 export default GlobalStyle
