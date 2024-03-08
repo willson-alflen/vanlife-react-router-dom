@@ -27,9 +27,9 @@ export default function Vans() {
   ))
 
   return (
-    <div>
+    <S.VansWrapper>
       <h1>Explore our van options</h1>
       <S.VansList>{vanElements}</S.VansList>
-    </div>
+    </S.VansWrapper>
   )
 }

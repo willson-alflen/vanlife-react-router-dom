@@ -11,6 +11,11 @@ export const VansList = styled.div`
   gap: 2rem;
   justify-content: center;
   margin: 3rem 0 6rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
 `
 
 export const StyledLink = styled(Link)`

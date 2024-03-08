@@ -28,4 +28,10 @@ export const NavList = styled.ul`
 
 export const NavItem = styled.li`
   color: #4d4d4d;
+
+  &:hover {
+    color: #161616;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 `
