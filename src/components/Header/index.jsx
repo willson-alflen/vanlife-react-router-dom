@@ -1,7 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import * as S from './styles'
 
 export default function Header() {
+  const activeStyles = {
+    color: '#161616',
+    fontWeight: 'bold',
+    textDecoration: 'underline',
+  }
+
   return (
     <S.Header>
       <S.Nav>
@@ -10,13 +16,28 @@ export default function Header() {
         </S.NavBrand>
         <S.NavList>
           <S.NavItem>
-            <Link to="/host">Host</Link>
+            <NavLink
+              to="host"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Host
+            </NavLink>
           </S.NavItem>
           <S.NavItem>
-            <Link to="/about">About</Link>
+            <NavLink
+              to="about"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              About
+            </NavLink>
           </S.NavItem>
           <S.NavItem>
-            <Link to="/vans">Vans</Link>
+            <NavLink
+              to="vans"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Vans
+            </NavLink>
           </S.NavItem>
         </S.NavList>
       </S.Nav>

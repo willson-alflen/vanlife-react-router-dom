@@ -27,7 +27,12 @@ export const VanCard = styled.div``
 
 export const VanImg = styled.img`
   max-width: 100%;
+  max-height: 460px;
   border-radius: 0.5rem;
+
+  @media (max-width: 768px) {
+    max-height: 100%;
+  }
 `
 
 export const VanInfo = styled.div`
