@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, Outlet, useParams } from 'react-router-dom'
 import * as S from './styles'
 import ArrowLeft from '../../../assets/images/arrow-left.png'
 
 export default function HostVanDetail() {
   const { id } = useParams()
   const [currentVan, setCurrentVan] = useState(null)
+
+  const activeStyles = {
+    fontWeight: 'bold',
+    textDecoration: 'underline',
+    color: '#161616',
+  }
 
   useEffect(() => {
     fetch(`http://localhost:8000/vans`)
@@ -22,6 +28,7 @@ export default function HostVanDetail() {
         <img src={ArrowLeft} alt="Back to all vans" />
         Back to all vans
       </S.StyledLink>
+
       {currentVan ? (
         <S.HostVanDetailWrapper>
           <S.HostVanDetailHeader>
@@ -37,6 +44,30 @@ export default function HostVanDetail() {
               </S.VanPrice>
             </S.InfoText>
           </S.HostVanDetailHeader>
+
+          <S.HostVanDetailNav>
+            <NavLink
+              to="."
+              end
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Details
+            </NavLink>
+            <NavLink
+              to="pricing"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Pricing
+            </NavLink>
+            <NavLink
+              to="photos"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Photos
+            </NavLink>
+          </S.HostVanDetailNav>
+
+          <Outlet context={{ currentVan }} />
         </S.HostVanDetailWrapper>
       ) : (
         <h2>Loading...</h2>

@@ -84,3 +84,9 @@ export const VanPrice = styled.p`
     font-size: 1.5rem;
   }
 `
+
+export const HostVanDetailNav = styled.nav`
+  display: flex;
+  column-gap: 1.5rem;
+  margin-bottom: 2rem;
+`
