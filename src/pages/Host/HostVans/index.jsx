@@ -17,7 +17,7 @@ export default function HostVans() {
   }, [])
 
   const hostVansElements = hostVans.map((van) => (
-    <S.StyledLink key={van.id} to={`vans/${van.id}`}>
+    <S.StyledLink key={van.id} to={`${van.id}`}>
       <S.VanItem>
         <S.VanImage src={van.imageUrl} alt={`Photo of ${van.name}`} />
         <S.VanInfo>

@@ -6,10 +6,11 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Vans from './pages/Vans'
 import VanDetail from './pages/VanDetail'
-import Dashboard from './pages/Host/Dashboard'
-import Income from './pages/Host/Income'
+import Dashboard from './pages/Host/HostMenu/Dashboard'
+import Income from './pages/Host/HostMenu/Income'
 import HostVans from './pages/Host/HostVans'
-import Reviews from './pages/Host/Reviews'
+import HostVanDetail from './pages/Host/HostVanDetail'
+import Reviews from './pages/Host/HostMenu/Reviews'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="income" element={<Income />} />
               <Route path="vans" element={<HostVans />} />
+              <Route path="vans/:id" element={<HostVanDetail />} />
               <Route path="reviews" element={<Reviews />} />
             </Route>
           </Route>
