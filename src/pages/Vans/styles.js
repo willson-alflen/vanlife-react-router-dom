@@ -96,3 +96,61 @@ export const VanType = styled.span`
     color: #ffead0;
   }
 `
+
+export const VansFilter = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+`
+
+export const FilterButton = styled.button`
+  height: 34px;
+  padding: 6px 26px;
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffead0;
+  color: #4d4d4d;
+  transition: 200ms all cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  &.selected {
+    color: #ffead0;
+  }
+
+  &.simple:hover,
+  &.simple.selected {
+    background-color: #e17654;
+    color: #ffead0;
+  }
+
+  &.rugged:hover,
+  &.rugged.selected {
+    background-color: #115e59;
+    color: #ffead0;
+  }
+
+  &.luxury:hover,
+  &.luxury.selected {
+    background-color: #161616;
+    color: #ffead0;
+  }
+`
+
+export const ClearFilterButton = styled.button`
+  height: 34px;
+  padding: 6px 26px;
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffead0;
+  color: #4d4d4d;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fff;
+  }
+`
