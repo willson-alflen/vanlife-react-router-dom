@@ -19,7 +19,10 @@ export default function Vans() {
 
   const vanElements = displayedVans.map((van) => (
     <S.VanCard key={van.id}>
-      <S.StyledLink to={van.id}>
+      <S.StyledLink
+        to={van.id}
+        state={{ search: searchParams.toString(), type: typeFilter }}
+      >
         <S.VanImg src={van.imageUrl} />
         <S.VanInfo>
           <S.VanName>{van.name}</S.VanName>

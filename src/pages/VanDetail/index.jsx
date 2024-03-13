@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import * as S from './styles'
 import ArrowLeft from '../../assets/images/arrow-left.png'
 
 export default function VanDetail() {
   const { id } = useParams()
+  const location = useLocation()
   const [van, setVan] = useState(null)
+  const search = location.state ? `?${location.state.search}` : ''
+  const type = location.state?.type || 'all'
 
   useEffect(() => {
     fetch(`http://localhost:8000/vans`)
@@ -19,9 +22,9 @@ export default function VanDetail() {
   return (
     <section>
       <S.VanDetailWrapper>
-        <S.StyledMenuLink to="/vans">
+        <S.StyledMenuLink to={`..${search}`} relative="path">
           <img src={ArrowLeft} alt="Back to all vans" />
-          Back to all vans
+          Back to {type} vans
         </S.StyledMenuLink>
         {van ? (
           <S.VanDetail>
