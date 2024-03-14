@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
+import { fetchHostSingleVan } from '../../../api'
 import * as S from './styles'
 import ArrowLeft from '../../../assets/images/arrow-left.png'
 
 export default function HostVanDetail() {
   const { id } = useParams()
   const [currentVan, setCurrentVan] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [fetchingError, setFetchingError] = useState(null)
 
   const activeStyles = {
     fontWeight: 'bold',
@@ -14,13 +17,39 @@ export default function HostVanDetail() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:8000/vans`)
-      .then((res) => res.json())
-      .then((data) => {
-        const foundVan = data.find((van) => van.id === id)
-        setCurrentVan(foundVan)
-      })
+    setIsLoading(true)
+
+    // Simulate a slow network
+    setTimeout(async () => {
+      try {
+        const data = await fetchHostSingleVan(id)
+        setCurrentVan(data)
+      } catch (error) {
+        setFetchingError(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }, 1000)
   }, [id])
+
+  if (isLoading) {
+    return (
+      <S.Section>
+        <h1>Loading van...</h1>
+      </S.Section>
+    )
+  }
+
+  if (fetchingError) {
+    return (
+      <S.Section>
+        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
+        <S.BackToHomeLink to=".." relative="path">
+          Go back to your vans
+        </S.BackToHomeLink>
+      </S.Section>
+    )
+  }
 
   return (
     <S.Section>
@@ -29,7 +58,7 @@ export default function HostVanDetail() {
         Back to all vans
       </S.StyledLink>
 
-      {currentVan ? (
+      {currentVan !== null && (
         <S.HostVanDetailWrapper>
           <S.HostVanDetailHeader>
             <S.Image src={currentVan.imageUrl} />
@@ -69,8 +98,6 @@ export default function HostVanDetail() {
 
           <Outlet context={{ currentVan }} />
         </S.HostVanDetailWrapper>
-      ) : (
-        <h2>Loading...</h2>
       )}
     </S.Section>
   )

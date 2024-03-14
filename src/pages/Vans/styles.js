@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const VansWrapper = styled.div`
   padding: 0 2rem;
+  min-height: 30vh;
 `
 
 export const VansList = styled.div`
@@ -152,5 +153,24 @@ export const ClearFilterButton = styled.button`
 
   &:hover {
     background-color: #fff;
+  }
+`
+
+export const ErrorMessage = styled.p`
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 15vh;
+  margin-bottom: 3rem;
+`
+
+export const BackToHomeLink = styled(Link)`
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #f8c300;
+  border-radius: 4px;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: translate(1px, 1px);
   }
 `

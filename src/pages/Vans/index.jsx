@@ -1,16 +1,29 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { fetchAllVans } from '../../api'
 import * as S from './styles'
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams()
   const typeFilter = searchParams.get('type')
   const [vans, setVans] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [fetchingError, setFetchingError] = useState(null)
 
   useEffect(() => {
-    fetch('http://localhost:8000/vans')
-      .then((res) => res.json())
-      .then((data) => setVans(data))
+    setIsLoading(true)
+
+    // Simulate a slow network
+    setTimeout(async () => {
+      try {
+        const data = await fetchAllVans()
+        setVans(data)
+      } catch (error) {
+        setFetchingError(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }, 1000)
   }, [])
 
   const displayedVans = typeFilter
@@ -45,6 +58,23 @@ export default function Vans() {
       }
       return prevParams
     })
+  }
+
+  if (isLoading) {
+    return (
+      <S.VansWrapper>
+        <h1>Loading vans...</h1>
+      </S.VansWrapper>
+    )
+  }
+
+  if (fetchingError) {
+    return (
+      <S.VansWrapper>
+        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
+        <S.BackToHomeLink to="/">Go back to home</S.BackToHomeLink>
+      </S.VansWrapper>
+    )
   }
 
   return (

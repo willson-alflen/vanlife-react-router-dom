@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
+import { fetchVanById } from '../../api'
 import * as S from './styles'
 import ArrowLeft from '../../assets/images/arrow-left.png'
 
@@ -9,15 +10,43 @@ export default function VanDetail() {
   const [van, setVan] = useState(null)
   const search = location.state ? `?${location.state.search}` : ''
   const type = location.state?.type || 'all'
+  const [isLoading, setIsLoading] = useState(false)
+  const [fetchingError, setFetchingError] = useState(null)
 
   useEffect(() => {
-    fetch(`http://localhost:8000/vans`)
-      .then((res) => res.json())
-      .then((data) => {
-        const foundVan = data.find((van) => van.id === id)
-        setVan(foundVan)
-      })
+    setIsLoading(true)
+
+    // Simulate a slow network
+    setTimeout(async () => {
+      try {
+        const data = await fetchVanById(id)
+        setVan(data)
+      } catch (error) {
+        setFetchingError(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }, 1000)
   }, [id])
+
+  if (isLoading) {
+    return (
+      <S.VanDetailWrapper>
+        <h1>Loading van...</h1>
+      </S.VanDetailWrapper>
+    )
+  }
+
+  if (fetchingError) {
+    return (
+      <S.VanDetailWrapper>
+        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
+        <S.BackToHomeLink to={`..${search}`} relative="path">
+          Back to {type} vans
+        </S.BackToHomeLink>
+      </S.VanDetailWrapper>
+    )
+  }
 
   return (
     <section>

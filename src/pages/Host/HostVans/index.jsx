@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react'
+import { fetchHostVans } from '../../../api'
 import * as S from './styles'
 
 export default function HostVans() {
   const [hostVans, setHostVans] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [fetchingError, setFetchingError] = useState(null)
 
   useEffect(() => {
-    const fetchHostVans = async () => {
-      const response = await fetch('http://localhost:8000/vans')
-      const data = await response.json()
+    setIsLoading(true)
 
-      const filteredVans = data.filter((van) => van.hostId === 123)
-
-      setHostVans(filteredVans)
-    }
-    fetchHostVans()
+    // Simulate a slow network
+    setTimeout(async () => {
+      try {
+        const data = await fetchHostVans()
+        setHostVans(data)
+      } catch (error) {
+        setFetchingError(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }, 1000)
   }, [])
 
   const hostVansElements = hostVans.map((van) => (
@@ -27,6 +34,25 @@ export default function HostVans() {
       </S.VanItem>
     </S.StyledLink>
   ))
+
+  if (isLoading) {
+    return (
+      <S.HostVansSection>
+        <h1>Loading your vans...</h1>
+      </S.HostVansSection>
+    )
+  }
+
+  if (fetchingError) {
+    return (
+      <S.HostVansSection>
+        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
+        <S.BackToHomeLink to=".." relative="path">
+          Go back to your dashboard
+        </S.BackToHomeLink>
+      </S.HostVansSection>
+    )
+  }
 
   return (
     <S.HostVansSection>
