@@ -24,7 +24,11 @@ export default function HostVans() {
   }, [])
 
   const hostVansElements = hostVans.map((van) => (
-    <S.StyledLink key={van.id} to={van.id}>
+    <S.StyledLink
+      key={van.id}
+      to={van.id}
+      aria-label={`Go to ${van.name} van detail`}
+    >
       <S.VanItem>
         <S.VanImage src={van.imageUrl} alt={`Photo of ${van.name}`} />
         <S.VanInfo>
@@ -38,7 +42,7 @@ export default function HostVans() {
   if (isLoading) {
     return (
       <S.HostVansSection>
-        <h1>Loading your vans...</h1>
+        <h1 aria-live="polite">Loading your vans...</h1>
       </S.HostVansSection>
     )
   }
@@ -46,8 +50,14 @@ export default function HostVans() {
   if (fetchingError) {
     return (
       <S.HostVansSection>
-        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
-        <S.BackToHomeLink to=".." relative="path">
+        <S.ErrorMessage aria-live="assertive">
+          {fetchingError.message}
+        </S.ErrorMessage>
+        <S.BackToHomeLink
+          to=".."
+          relative="path"
+          aria-label="Return to your dashboard"
+        >
           Go back to your dashboard
         </S.BackToHomeLink>
       </S.HostVansSection>

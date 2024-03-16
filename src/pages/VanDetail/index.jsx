@@ -32,7 +32,7 @@ export default function VanDetail() {
   if (isLoading) {
     return (
       <S.VanDetailWrapper>
-        <h1>Loading van...</h1>
+        <h1 aria-live="polite">Loading van...</h1>
       </S.VanDetailWrapper>
     )
   }
@@ -40,8 +40,14 @@ export default function VanDetail() {
   if (fetchingError) {
     return (
       <S.VanDetailWrapper>
-        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
-        <S.BackToHomeLink to={`..${search}`} relative="path">
+        <S.ErrorMessage aria-live="assertive">
+          {fetchingError.message}
+        </S.ErrorMessage>
+        <S.BackToHomeLink
+          to={`..${search}`}
+          relative="path"
+          aria-label={`Back to ${type} vans`}
+        >
           Back to {type} vans
         </S.BackToHomeLink>
       </S.VanDetailWrapper>
@@ -51,14 +57,18 @@ export default function VanDetail() {
   return (
     <section>
       <S.VanDetailWrapper>
-        <S.StyledMenuLink to={`..${search}`} relative="path">
-          <img src={ArrowLeft} alt="Back to all vans" />
+        <S.StyledMenuLink
+          to={`..${search}`}
+          relative="path"
+          aria-label={`Back to ${type} vans`}
+        >
+          <img src={ArrowLeft} alt="" />
           Back to {type} vans
         </S.StyledMenuLink>
-        {van ? (
+        {van !== null && (
           <S.VanDetail>
             <S.VanInfo>
-              <S.VanlImg src={van.imageUrl} />
+              <S.VanlImg src={van.imageUrl} alt={van.name} />
               <S.VanType className={`van-type ${van.type}`}>
                 {van.type}
               </S.VanType>
@@ -67,11 +77,11 @@ export default function VanDetail() {
                 <span>${van.price}</span>/day
               </S.VanPrice>
               <S.VanDescription>{van.description}</S.VanDescription>
-              <S.StyledLink to="/rent">Rent this van</S.StyledLink>
+              <S.StyledLink to="/rent" aria-label="Go to rental page">
+                Rent this van
+              </S.StyledLink>
             </S.VanInfo>
           </S.VanDetail>
-        ) : (
-          <h2>Loading...</h2>
         )}
       </S.VanDetailWrapper>
     </section>

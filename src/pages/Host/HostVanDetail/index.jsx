@@ -35,7 +35,7 @@ export default function HostVanDetail() {
   if (isLoading) {
     return (
       <S.Section>
-        <h1>Loading van...</h1>
+        <h1 aria-live="polite">Loading van...</h1>
       </S.Section>
     )
   }
@@ -43,8 +43,14 @@ export default function HostVanDetail() {
   if (fetchingError) {
     return (
       <S.Section>
-        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
-        <S.BackToHomeLink to=".." relative="path">
+        <S.ErrorMessage aria-live="assertive">
+          {fetchingError.message}
+        </S.ErrorMessage>
+        <S.BackToHomeLink
+          to=".."
+          relative="path"
+          aria-label="Go back to your vans"
+        >
           Go back to your vans
         </S.BackToHomeLink>
       </S.Section>
@@ -53,15 +59,15 @@ export default function HostVanDetail() {
 
   return (
     <S.Section>
-      <S.StyledLink to=".." relative="path">
-        <img src={ArrowLeft} alt="Back to all vans" />
+      <S.StyledLink to=".." relative="path" aria-label="Go back to all vans">
+        <img src={ArrowLeft} alt="" />
         Back to all vans
       </S.StyledLink>
 
       {currentVan !== null && (
         <S.HostVanDetailWrapper>
           <S.HostVanDetailHeader>
-            <S.Image src={currentVan.imageUrl} />
+            <S.Image src={currentVan.imageUrl} alt={currentVan.name} />
 
             <S.InfoText>
               <S.VanType className={`van-type ${currentVan.type}`}>
@@ -78,18 +84,21 @@ export default function HostVanDetail() {
             <NavLink
               to="."
               end
+              aria-label="Go to details section of the van detail page"
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
               Details
             </NavLink>
             <NavLink
               to="pricing"
+              aria-label="Go to pricing section of the van detail page"
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
               Pricing
             </NavLink>
             <NavLink
               to="photos"
+              aria-label="Go to photos section of the van detail page"
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
               Photos

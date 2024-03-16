@@ -36,7 +36,7 @@ export default function Vans() {
         to={van.id}
         state={{ search: searchParams.toString(), type: typeFilter }}
       >
-        <S.VanImg src={van.imageUrl} />
+        <S.VanImg src={van.imageUrl} alt={van.name} />
         <S.VanInfo>
           <S.VanName>{van.name}</S.VanName>
           <S.VanPrice>
@@ -63,7 +63,7 @@ export default function Vans() {
   if (isLoading) {
     return (
       <S.VansWrapper>
-        <h1>Loading vans...</h1>
+        <h1 aria-live="polite">Loading vans...</h1>
       </S.VansWrapper>
     )
   }
@@ -71,8 +71,12 @@ export default function Vans() {
   if (fetchingError) {
     return (
       <S.VansWrapper>
-        <S.ErrorMessage>{fetchingError.message}</S.ErrorMessage>
-        <S.BackToHomeLink to="/">Go back to home</S.BackToHomeLink>
+        <S.ErrorMessage aria-live="assertive">
+          {fetchingError.message}
+        </S.ErrorMessage>
+        <S.BackToHomeLink to="/" aria-label="Return to homepage">
+          Go back to home
+        </S.BackToHomeLink>
       </S.VansWrapper>
     )
   }
