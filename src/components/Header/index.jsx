@@ -14,6 +14,7 @@ export default function Header() {
         <S.NavBrand>
           <Link to="/">#VanLife</Link>
         </S.NavBrand>
+
         <S.NavList>
           <S.NavItem>
             <NavLink
@@ -23,6 +24,7 @@ export default function Header() {
               Host
             </NavLink>
           </S.NavItem>
+
           <S.NavItem>
             <NavLink
               to="about"
@@ -31,12 +33,22 @@ export default function Header() {
               About
             </NavLink>
           </S.NavItem>
+
           <S.NavItem>
             <NavLink
               to="vans"
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
               Vans
+            </NavLink>
+          </S.NavItem>
+
+          <S.NavItem>
+            <NavLink
+              to="login"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Login
             </NavLink>
           </S.NavItem>
         </S.NavList>

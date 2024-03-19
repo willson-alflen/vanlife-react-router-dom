@@ -54,5 +54,22 @@
       "type": "rugged",
       "hostId": 123
     }
+  ],
+  "users": [
+    {
+      "userId": 123,
+      "email": "johndoe@email.com",
+      "password": "p123"
+    },
+    {
+      "userId": 456,
+      "email": "janesmith@email.com",
+      "password": "p456"
+    },
+    {
+      "userId": 789,
+      "email": "unclebob@email.com",
+      "password": "p789"
+    }
   ]
 }

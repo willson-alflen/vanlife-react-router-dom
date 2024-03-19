@@ -23,6 +23,7 @@ export const NavBrand = styled.span`
 export const NavList = styled.ul`
   display: flex;
   gap: 1rem;
+  align-items: flex-end;
   list-style: none;
 `
 
