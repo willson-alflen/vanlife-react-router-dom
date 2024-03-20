@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 export const SectionWrapper = styled.section`
   height: calc(100vh - 100px);
@@ -13,7 +12,7 @@ export const SectionWrapper = styled.section`
   }
 `
 
-export const LoginMessage = styled.h2`
+export const SignupMessage = styled.h2`
   color: red;
   margin-bottom: 5rem;
 `
@@ -32,7 +31,7 @@ export const FormWrapper = styled.div`
   }
 `
 
-export const LoginTitle = styled.h1`
+export const SignupTitle = styled.h1`
   color: #161616;
   font-size: 2rem;
   font-weight: bold;
@@ -43,7 +42,7 @@ export const LoginTitle = styled.h1`
   }
 `
 
-export const LoginForm = styled.form`
+export const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -51,7 +50,7 @@ export const LoginForm = styled.form`
   max-width: 500px;
 `
 
-export const LoginInput = styled.input`
+export const SignupInput = styled.input`
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   color: #4d4d4d;
@@ -66,7 +65,7 @@ export const LoginInput = styled.input`
   }
 `
 
-export const LoginButton = styled.button`
+export const SignupButton = styled.button`
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: bold;
@@ -84,19 +83,4 @@ export const LoginButton = styled.button`
   &:hover {
     transform: translate(1px, 1px);
   }
-`
-
-export const LoginSpan = styled.span`
-  font-size: 1rem;
-  font-weight: 500;
-  color: #161616;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
-`
-
-export const LoginLink = styled(Link)`
-  color: #ff8c38;
-  font-weight: bold;
 `

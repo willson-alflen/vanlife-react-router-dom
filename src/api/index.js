@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
 } from 'firebase/firestore/lite'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBJbRfBLeXbhNNksDlO5v_uTgMpRZhiAvI',
@@ -18,6 +19,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+const auth = getAuth(app)
 
 const vansCollection = collection(db, 'vans')
 const usersCollection = collection(db, 'users')
@@ -77,6 +79,19 @@ export async function loginUser(creds) {
     return users.find(
       (user) => user.email === creds.email && user.password === creds.password
     )
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function registerUser(creds) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      creds.email,
+      creds.password
+    )
+    return userCredential
   } catch (error) {
     throw new Error(error.message)
   }

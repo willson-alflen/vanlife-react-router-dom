@@ -17,6 +17,7 @@ import HostVanPhotos from './pages/Host/HostVanPhotos'
 import Reviews from './pages/Host/HostMenu/Reviews'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="vans" element={<Vans />} />
             <Route path="vans/:id" element={<VanDetail />} />
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
 
             <Route element={<AuthRequired />}>
               <Route path="host" element={<HostLayout />}>
