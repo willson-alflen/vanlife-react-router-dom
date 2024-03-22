@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../../api'
+import { toast } from 'react-toastify'
 import * as S from './styles'
 
 export default function Signup() {
+  const navigate = useNavigate()
   const [signupData, setSignupData] = useState({ email: '', password: '' })
   const [signupStatus, setSignupStatus] = useState('idle')
   const [error, setError] = useState(null)
@@ -21,7 +24,9 @@ export default function Signup() {
       .then((userCredential) => {
         if (userCredential) {
           setError(null)
+          toast.success('You have successfully created an account')
           console.log('User created:', userCredential.user)
+          navigate('/login')
         } else {
           setError(new Error("Couldn't create user"))
         }

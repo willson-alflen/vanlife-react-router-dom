@@ -6,7 +6,11 @@ import {
   getDoc,
   getDocs,
 } from 'firebase/firestore/lite'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBJbRfBLeXbhNNksDlO5v_uTgMpRZhiAvI',
@@ -22,7 +26,7 @@ const db = getFirestore(app)
 const auth = getAuth(app)
 
 const vansCollection = collection(db, 'vans')
-const usersCollection = collection(db, 'users')
+// const usersCollection = collection(db, 'users')
 
 export async function fetchAllVans() {
   try {
@@ -74,11 +78,12 @@ export async function fetchHostSingleVan(id) {
 
 export async function loginUser(creds) {
   try {
-    const snapshot = await getDocs(usersCollection)
-    const users = snapshot.docs.map((doc) => doc.data())
-    return users.find(
-      (user) => user.email === creds.email && user.password === creds.password
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      creds.email,
+      creds.password
     )
+    return userCredential
   } catch (error) {
     throw new Error(error.message)
   }
@@ -154,4 +159,16 @@ export async function registerUser(creds) {
 //   return data.find(
 //     (user) => user.email === creds.email && user.password === creds.password
 //   )
+// }
+
+// export async function loginUser(creds) {
+//   try {
+//     const snapshot = await getDocs(usersCollection)
+//     const users = snapshot.docs.map((doc) => doc.data())
+//     return users.find(
+//       (user) => user.email === creds.email && user.password === creds.password
+//     )
+//   } catch (error) {
+//     throw new Error(error.message)
+//   }
 // }

@@ -18,11 +18,14 @@ import Reviews from './pages/Host/HostMenu/Reviews'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 function App() {
   return (
     <>
       <GlobalStyle />
+      <ToastContainer autoClose={3000} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<GlobalLayout />}>

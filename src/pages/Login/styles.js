@@ -18,6 +18,33 @@ export const LoginMessage = styled.h2`
   margin-bottom: 5rem;
 `
 
+export const LoggedInMessage = styled.div`
+  h2 {
+    color: #ff8c38;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  p {
+    color: #161616;
+    font-size: 1rem;
+    margin-top: 5rem;
+
+    button {
+      color: #ff8c38;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+`
+
 export const FormWrapper = styled.div`
   display: flex;
   align-items: flex-start;

@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import { useContext } from 'react'
+import { UserContext } from '../../UserContext'
 
 export default function AuthRequired() {
-  const isLoggedIn = localStorage.getItem('loggedIn')
+  const { user } = useContext(UserContext)
+  console.log('user', user)
 
-  if (!isLoggedIn) {
+  if (!user) {
     return (
       <Navigate
         to="/login"
