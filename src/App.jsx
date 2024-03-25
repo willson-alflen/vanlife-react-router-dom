@@ -18,6 +18,7 @@ import Reviews from './pages/Host/HostMenu/Reviews'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import AddVan from './pages/Host/HostMenu/AddVan'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
@@ -47,6 +48,7 @@ function App() {
                   <Route path="photos" element={<HostVanPhotos />} />
                 </Route>
                 <Route path="reviews" element={<Reviews />} />
+                <Route path="add-van" element={<AddVan />} />
               </Route>
             </Route>
 

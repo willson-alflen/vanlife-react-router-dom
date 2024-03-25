@@ -36,6 +36,12 @@ export default function HostLayout() {
         >
           Reviews
         </S.StyledLink>
+        <S.StyledLink
+          to="add-van"
+          style={({ isActive }) => (isActive ? activeStyles : null)}
+        >
+          Add Van
+        </S.StyledLink>
       </S.Nav>
 
       <Outlet />

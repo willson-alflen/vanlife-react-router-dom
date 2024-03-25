@@ -4,7 +4,6 @@ import { UserContext } from '../../UserContext'
 
 export default function AuthRequired() {
   const { user } = useContext(UserContext)
-  console.log('user', user)
 
   if (!user) {
     return (

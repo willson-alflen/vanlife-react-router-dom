@@ -45,6 +45,13 @@ export const VanPrice = styled.p`
 export const StyledLink = styled(Link)`
   color: unset;
   text-decoration: unset;
+
+  &.list-a-van {
+    color: #ff8c38;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 `
 
 export const ErrorMessage = styled.p`
@@ -52,6 +59,18 @@ export const ErrorMessage = styled.p`
   font-size: 1.5rem;
   margin-top: 15vh;
   margin-bottom: 3rem;
+`
+
+export const NoVansMessage = styled.div`
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+export const NoVansText = styled.p`
+  font-weight: bold;
+  margin-bottom: 1rem;
 `
 
 export const BackToHomeLink = styled(Link)`

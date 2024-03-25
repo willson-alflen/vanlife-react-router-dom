@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../../UserContext'
 import { fetchHostVans } from '../../../api'
 import * as S from './styles'
 
 export default function HostVans() {
+  const { user } = useContext(UserContext)
   const [hostVans, setHostVans] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [fetchingError, setFetchingError] = useState(null)
@@ -13,7 +15,7 @@ export default function HostVans() {
     // Simulate a slow network
     setTimeout(async () => {
       try {
-        const data = await fetchHostVans()
+        const data = await fetchHostVans(user.uid)
         setHostVans(data)
       } catch (error) {
         setFetchingError(error)
@@ -21,7 +23,7 @@ export default function HostVans() {
         setIsLoading(false)
       }
     }, 1000)
-  }, [])
+  }, [user])
 
   const hostVansElements = hostVans.map((van) => (
     <S.StyledLink
@@ -66,13 +68,20 @@ export default function HostVans() {
 
   return (
     <S.HostVansSection>
-      <S.HostVansTitle>Your listed vans</S.HostVansTitle>
+      {hostVansElements.length !== 0 && (
+        <S.HostVansTitle>Your listed vans</S.HostVansTitle>
+      )}
 
       <S.HostVansList>
         {hostVansElements.length ? (
           hostVansElements
         ) : (
-          <p>You haven&apos;t listed any vans yet.</p>
+          <S.NoVansMessage>
+            <S.NoVansText>You haven&apos;t listed any vans yet.</S.NoVansText>
+            <S.StyledLink to="/host/add-van" className="list-a-van">
+              List a van now
+            </S.StyledLink>
+          </S.NoVansMessage>
         )}
       </S.HostVansList>
     </S.HostVansSection>

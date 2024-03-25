@@ -3,8 +3,10 @@ import {
   getFirestore,
   collection,
   doc,
+  addDoc,
   getDoc,
   getDocs,
+  setDoc,
 } from 'firebase/firestore/lite'
 import {
   getAuth,
@@ -23,10 +25,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
-const auth = getAuth(app)
+export const auth = getAuth(app)
 
 const vansCollection = collection(db, 'vans')
-// const usersCollection = collection(db, 'users')
+const usersCollection = collection(db, 'users')
 
 export async function fetchAllVans() {
   try {
@@ -52,11 +54,11 @@ export async function fetchVanById(id) {
   }
 }
 
-export async function fetchHostVans() {
+export async function fetchHostVans(userId) {
   try {
     const snapshot = await getDocs(vansCollection)
     const vans = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-    return vans.filter((van) => van.hostId === 123)
+    return vans.filter((van) => van.hostId === userId)
   } catch (error) {
     throw new Error(error.message)
   }
@@ -96,7 +98,23 @@ export async function registerUser(creds) {
       creds.email,
       creds.password
     )
+
+    const userData = {
+      email: userCredential.user.email,
+      uid: userCredential.user.uid,
+    }
+
+    await setDoc(doc(usersCollection, userCredential.user.uid), userData)
+
     return userCredential
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function addVan(vanData) {
+  try {
+    await addDoc(collection(db, 'vans'), vanData)
   } catch (error) {
     throw new Error(error.message)
   }
