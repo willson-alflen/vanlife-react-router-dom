@@ -12,6 +12,12 @@ export const AddVanTitle = styled.h1`
   margin-bottom: 3rem;
 `
 
+export const ErrorMessage = styled.h2`
+  color: red;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+`
+
 export const AddVanForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -22,17 +28,17 @@ export const AddVanForm = styled.form`
 
 export const AddVanLabel = styled.label`
   margin-bottom: -0.5rem;
+`
 
-  &.label-input-file {
-    background-color: #fff;
-    cursor: pointer;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 1rem;
-    outline: none;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    margin: 0.5rem 0;
-  }
+export const AddVanImageLabel = styled.label`
+  background-color: ${(props) => (props.imageuploaded ? '#ff8c38' : '#fff')};
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 1rem;
+  outline: none;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  margin: 0.5rem 0;
 `
 
 export const AddVanInput = styled.input`

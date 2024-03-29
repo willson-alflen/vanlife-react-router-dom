@@ -102,6 +102,7 @@ export async function registerUser(creds) {
     const userData = {
       email: userCredential.user.email,
       uid: userCredential.user.uid,
+      ratedVans: [],
     }
 
     await setDoc(doc(usersCollection, userCredential.user.uid), userData)
@@ -120,7 +121,99 @@ export async function addVan(vanData) {
   }
 }
 
-/* LEGACY CODE ==========================================*/
+export async function rateVan(vanId, rating) {
+  try {
+    const vanDocRef = doc(db, 'vans', vanId)
+    const vanDocSnapshot = await getDoc(vanDocRef)
+
+    if (!vanDocSnapshot.exists()) {
+      throw new Error('Van document does not exist')
+    }
+
+    const vanData = vanDocSnapshot.data()
+
+    if (!vanData) {
+      throw new Error('Van data or rating not available')
+    }
+
+    const newRating =
+      vanData.rating === 0 ? rating / 2 : (vanData.rating + rating / 2) / 2
+
+    await setDoc(vanDocRef, { ...vanData, rating: newRating })
+
+    console.log('Van rating updated successfully:', vanId, newRating)
+  } catch (error) {
+    console.error('Error rating van:', error)
+    throw new Error(error.message)
+  }
+}
+
+export async function getVanRating(vanId) {
+  try {
+    const vanDoc = await getDoc(doc(db, 'vans', vanId))
+
+    if (!vanDoc.exists()) {
+      throw new Error('Document not found')
+    }
+
+    return vanDoc.data().rating
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function addUserRatedVan(userId, vanId) {
+  try {
+    const userRef = doc(usersCollection, userId) // Update this line
+    const userDoc = await getDoc(userRef)
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data()
+
+      // Ensure userData.ratedVans is an array
+      const ratedVans = Array.isArray(userData.ratedVans)
+        ? userData.ratedVans
+        : []
+
+      if (!ratedVans.includes(vanId)) {
+        await setDoc(userRef, { ...userData, ratedVans: [...ratedVans, vanId] }) // Update this line
+      }
+    } else {
+      throw new Error('User document not found')
+    }
+  } catch (error) {
+    console.error('Error updating user rated vans:', error)
+    throw new Error(error.message)
+  }
+}
+
+// export async function addUserRatedVan(userId, vanId) {
+//   try {
+//     const userDocRef = doc(db, 'users', userId)
+//     const userDocSnapshot = await getDoc(userDocRef)
+
+//     if (!userDocSnapshot.exists()) {
+//       throw new Error('User document does not exist')
+//     }
+
+//     const userData = userDocSnapshot.data()
+
+//     if (!userData) {
+//       throw new Error('User data not available')
+//     }
+
+//     const newRatedVans = [...userData.ratedVans, vanId]
+
+//     await setDoc(userDocRef, { ...userData, ratedVans: newRatedVans })
+
+//     console.log('User rated van successfully:', userId, vanId)
+//   } catch (error) {
+//     console.error('Error adding rated van:', error)
+//     throw new Error(error.message)
+//   }
+// }
+
+/* LEGACY CODE ========================================== */
 
 // export async function fetchAllVans() {
 //   const response = await fetch('http://localhost:8000/vans')

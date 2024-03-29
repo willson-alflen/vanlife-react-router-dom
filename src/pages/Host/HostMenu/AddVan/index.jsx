@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { addVan, auth } from '../../../../api'
 import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { toast } from 'react-toastify'
@@ -13,6 +13,12 @@ export default function AddVan() {
     imageUrl: null,
     description: '',
   })
+  const [imageUploaded, setImageUploaded] = useState(false)
+  const [error, setError] = useState(null)
+  const imageLabelStyles = {
+    backgroundColor: 'lightgreen',
+    color: '#fff',
+  }
 
   function handleFormChange(event) {
     const { files, name, value } = event.target
@@ -27,11 +33,13 @@ export default function AddVan() {
     try {
       const currentUser = auth.currentUser
       if (!currentUser) {
-        throw new Error('You must be logged in to list a van')
+        setError('You must be logged in to list a van')
+        return
       }
 
       if (!vanData.imageUrl) {
-        throw new Error('Please select an image for the van')
+        toast.error('Please select an image for the van')
+        return
       }
 
       // Upload the image to Firebase Storage
@@ -47,8 +55,9 @@ export default function AddVan() {
       })
       toast.success('Your van has been listed successfully!')
       clearForm()
-    } catch (error) {
-      console.error('Error listing van:', error)
+      setError(null)
+    } catch (err) {
+      setError(err)
       toast.error('Failed to list your van. Please try again later.')
     }
   }
@@ -63,8 +72,16 @@ export default function AddVan() {
     })
   }
 
+  useEffect(() => {
+    if (vanData.imageUrl !== null) {
+      setImageUploaded(true)
+    }
+  }, [vanData.imageUrl])
+
   return (
     <S.AddVanSection>
+      {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+
       <S.AddVanTitle>Van Info</S.AddVanTitle>
 
       <S.AddVanForm onSubmit={handleFormSubmit}>
@@ -98,16 +115,18 @@ export default function AddVan() {
           required
         />
 
-        <S.AddVanLabel htmlFor="van-image" className="label-input-file">
-          Upload Van Image
-        </S.AddVanLabel>
+        <S.AddVanImageLabel
+          htmlFor="van-image"
+          style={imageUploaded ? imageLabelStyles : null}
+        >
+          {imageUploaded ? 'Image uploaded' : 'Upload Van image'}
+        </S.AddVanImageLabel>
         <S.AddVanInputFile
           type="file"
           id="van-image"
           name="imageUrl"
           onChange={handleFormChange}
           accept="image/*"
-          required
         />
 
         <S.AddVanLabel htmlFor="van-description">Description:</S.AddVanLabel>

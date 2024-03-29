@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const HostVansSection = styled.section`
   padding-inline: 2rem;
-  min-height: 30vh;
+  min-height: calc(100vh - 196px);
 `
 
 export const HostVansTitle = styled.h1`

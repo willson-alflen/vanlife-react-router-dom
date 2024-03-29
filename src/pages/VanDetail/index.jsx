@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { fetchVanById } from '../../api'
+import VanRating from '../../components/VanRating'
 import * as S from './styles'
 import ArrowLeft from '../../assets/images/arrow-left.png'
 
@@ -73,6 +74,7 @@ export default function VanDetail() {
                 {van.type}
               </S.VanType>
               <S.VanName>{van.name}</S.VanName>
+              <VanRating vanId={id} />
               <S.VanPrice>
                 <span>${van.price}</span>/day
               </S.VanPrice>

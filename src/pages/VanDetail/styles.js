@@ -76,12 +76,11 @@ export const VanType = styled.span`
 
 export const VanName = styled.h2`
   font-size: 2rem;
-  margin-bottom: 10px;
 `
 
 export const VanPrice = styled.p`
   font-size: 1.25rem;
-  margin-bottom: 10px;
+  margin: 1rem 0;
 
   span {
     font-weight: 700;
