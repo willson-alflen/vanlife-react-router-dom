@@ -24,6 +24,12 @@ export default function VanRating({ vanId }) {
   }
 
   const handleRating = async () => {
+    if (!user) {
+      toast.error('You must be logged in to rate a van')
+      setIsOpen(false)
+      return
+    }
+
     if (userHasRated) {
       toast.error('You have already rated this van')
       return
