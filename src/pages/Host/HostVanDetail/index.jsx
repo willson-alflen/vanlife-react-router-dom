@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
 import { fetchHostSingleVan } from '../../../api'
+import VanLoadingSpinner from '../../../components/VanLoadingSpinner'
 import * as S from './styles'
 import ArrowLeft from '../../../assets/images/arrow-left.png'
 
@@ -33,11 +34,7 @@ export default function HostVanDetail() {
   }, [id])
 
   if (isLoading) {
-    return (
-      <S.Section>
-        <h1 aria-live="polite">Loading van...</h1>
-      </S.Section>
-    )
+    return <VanLoadingSpinner />
   }
 
   if (fetchingError) {

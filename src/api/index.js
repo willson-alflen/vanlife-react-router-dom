@@ -12,6 +12,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -25,7 +27,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+
 export const auth = getAuth(app)
+setPersistence(auth, browserLocalPersistence)
 
 const vansCollection = collection(db, 'vans')
 const usersCollection = collection(db, 'users')
@@ -164,19 +168,18 @@ export async function getVanRating(vanId) {
 
 export async function addUserRatedVan(userId, vanId) {
   try {
-    const userRef = doc(usersCollection, userId) // Update this line
+    const userRef = doc(usersCollection, userId)
     const userDoc = await getDoc(userRef)
 
     if (userDoc.exists()) {
       const userData = userDoc.data()
 
-      // Ensure userData.ratedVans is an array
       const ratedVans = Array.isArray(userData.ratedVans)
         ? userData.ratedVans
         : []
 
       if (!ratedVans.includes(vanId)) {
-        await setDoc(userRef, { ...userData, ratedVans: [...ratedVans, vanId] }) // Update this line
+        await setDoc(userRef, { ...userData, ratedVans: [...ratedVans, vanId] })
       }
     } else {
       throw new Error('User document not found')

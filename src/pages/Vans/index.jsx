@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { fetchAllVans } from '../../api'
+import VanLoadingSpinner from '../../components/VanLoadingSpinner'
 import * as S from './styles'
 
 export default function Vans() {
@@ -61,11 +62,7 @@ export default function Vans() {
   }
 
   if (isLoading) {
-    return (
-      <S.VansWrapper>
-        <h1 aria-live="polite">Loading vans...</h1>
-      </S.VansWrapper>
-    )
+    return <VanLoadingSpinner />
   }
 
   if (fetchingError) {

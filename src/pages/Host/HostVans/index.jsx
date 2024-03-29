@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../../UserContext'
 import { fetchHostVans } from '../../../api'
+import VanLoadingSpinner from '../../../components/VanLoadingSpinner'
 import * as S from './styles'
 
 export default function HostVans() {
@@ -42,11 +43,7 @@ export default function HostVans() {
   ))
 
   if (isLoading) {
-    return (
-      <S.HostVansSection>
-        <h1 aria-live="polite">Loading your vans...</h1>
-      </S.HostVansSection>
-    )
+    return <VanLoadingSpinner />
   }
 
   if (fetchingError) {

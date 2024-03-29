@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from 'react'
-import { getAuth } from 'firebase/auth'
+import { createContext, useState, useEffect } from 'react'
+import { auth } from '../api'
+import VanLoadingSpinner from '../components/VanLoadingSpinner'
 import PropTypes from 'prop-types'
 
 const UserContext = createContext()
@@ -7,7 +8,7 @@ const UserContext = createContext()
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [ratedVans, setRatedVans] = useState([])
-  const auth = getAuth()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -18,13 +19,18 @@ const UserProvider = ({ children }) => {
         setUser(null)
         setRatedVans([])
       }
+      setIsLoading(false)
     })
 
     return () => unsubscribe()
-  }, [auth])
+  }, [])
 
   const addRatedVan = (vanId) => {
     setRatedVans((prevRatedVans) => [...prevRatedVans, vanId])
+  }
+
+  if (isLoading) {
+    return <VanLoadingSpinner />
   }
 
   return (

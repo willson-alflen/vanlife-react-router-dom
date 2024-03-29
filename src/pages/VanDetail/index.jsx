@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { fetchVanById } from '../../api'
 import VanRating from '../../components/VanRating'
+import VanLoadingSpinner from '../../components/VanLoadingSpinner'
 import * as S from './styles'
 import ArrowLeft from '../../assets/images/arrow-left.png'
 
@@ -31,11 +32,7 @@ export default function VanDetail() {
   }, [id])
 
   if (isLoading) {
-    return (
-      <S.VanDetailWrapper>
-        <h1 aria-live="polite">Loading van...</h1>
-      </S.VanDetailWrapper>
-    )
+    return <VanLoadingSpinner />
   }
 
   if (fetchingError) {
