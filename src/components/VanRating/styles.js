@@ -38,6 +38,17 @@ export const ModalTitle = styled.h2`
   margin-bottom: 1.5rem;
 `
 
+export const ModalComment = styled.textarea`
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #989898;
+  border-radius: 4px;
+  color: #fefefe;
+  background-color: #1f1f1f;
+  resize: none;
+  font-size: 1rem;
+`
+
 export const ModalButtonRate = styled.button`
   color: #989898;
   font-size: 1rem;

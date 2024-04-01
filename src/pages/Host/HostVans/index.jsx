@@ -76,7 +76,7 @@ export default function HostVans() {
           <S.NoVansMessage>
             <S.NoVansText>You haven&apos;t listed any vans yet.</S.NoVansText>
             <S.StyledLink to="/host/add-van" className="list-a-van">
-              List a van now
+              List a van now!
             </S.StyledLink>
           </S.NoVansMessage>
         )}

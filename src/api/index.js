@@ -7,6 +7,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore/lite'
 import {
   getAuth,
@@ -125,7 +126,7 @@ export async function addVan(vanData) {
   }
 }
 
-export async function rateVan(vanId, rating) {
+export async function rateVan(vanId, review) {
   try {
     const vanDocRef = doc(db, 'vans', vanId)
     const vanDocSnapshot = await getDoc(vanDocRef)
@@ -140,12 +141,16 @@ export async function rateVan(vanId, rating) {
       throw new Error('Van data or rating not available')
     }
 
-    const newRating =
-      vanData.rating === 0 ? rating / 2 : (vanData.rating + rating / 2) / 2
+    const newReviewsArray = Array.isArray(vanData.reviews)
+      ? [...vanData.reviews, review]
+      : [review]
+    await updateDoc(vanDocRef, { reviews: newReviewsArray })
 
-    await setDoc(vanDocRef, { ...vanData, rating: newRating })
-
-    console.log('Van rating updated successfully:', vanId, newRating)
+    const newAverageRating =
+      newReviewsArray.reduce((acc, review) => acc + review.rating, 0) /
+      newReviewsArray.length /
+      2
+    await updateDoc(vanDocRef, { rating: newAverageRating })
   } catch (error) {
     console.error('Error rating van:', error)
     throw new Error(error.message)
@@ -190,31 +195,31 @@ export async function addUserRatedVan(userId, vanId) {
   }
 }
 
-// export async function addUserRatedVan(userId, vanId) {
-//   try {
-//     const userDocRef = doc(db, 'users', userId)
-//     const userDocSnapshot = await getDoc(userDocRef)
+export async function getVanReviews(vanId) {
+  try {
+    const vanDoc = await getDoc(doc(db, 'vans', vanId))
 
-//     if (!userDocSnapshot.exists()) {
-//       throw new Error('User document does not exist')
-//     }
+    if (!vanDoc.exists()) {
+      throw new Error('Document not found')
+    }
 
-//     const userData = userDocSnapshot.data()
+    return vanDoc.data().reviews
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
 
-//     if (!userData) {
-//       throw new Error('User data not available')
-//     }
-
-//     const newRatedVans = [...userData.ratedVans, vanId]
-
-//     await setDoc(userDocRef, { ...userData, ratedVans: newRatedVans })
-
-//     console.log('User rated van successfully:', userId, vanId)
-//   } catch (error) {
-//     console.error('Error adding rated van:', error)
-//     throw new Error(error.message)
-//   }
-// }
+export async function getHostVanReviews(hostId) {
+  try {
+    const snapshot = await getDocs(vansCollection)
+    const vans = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    return vans
+      .filter((van) => van.hostId === hostId)
+      .flatMap((van) => van.reviews)
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
 
 /* LEGACY CODE ========================================== */
 

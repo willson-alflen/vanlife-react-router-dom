@@ -13,9 +13,10 @@ export const VanDetailWrapper = styled.div`
 `
 
 export const StyledMenuLink = styled(Link)`
-  img {
-    margin-right: 0.5rem;
-  }
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
   &:hover {
     color: #161616;
     font-weight: bold;
@@ -27,6 +28,7 @@ export const VanDetail = styled.div`
   display: flex;
   flex-direction: column;
   color: #161616;
+  gap: 5rem;
 `
 
 export const VanlImg = styled.img`
@@ -133,4 +135,53 @@ export const BackToHomeLink = styled(Link)`
   &:hover {
     transform: translate(1px, 1px);
   }
+`
+
+export const VanReviews = styled.div`
+  min-height: 30vh;
+`
+
+export const ReviewList = styled.ul`
+  margin-block: 2rem;
+`
+
+export const ReviewItem = styled.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  list-style-type: none;
+  background-color: white;
+  margin-bottom: 15px;
+  padding-block: 2rem;
+  padding-left: 1.5rem;
+  border-radius: 6px;
+`
+
+export const ReviewAuthor = styled.div`
+  .avatar {
+    font-size: 3rem;
+  }
+`
+
+export const ReviewContent = styled.div``
+
+export const ReviewRating = styled.p`
+  margin-bottom: 0.5rem;
+
+  .star-icon {
+    color: #ffd700;
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+`
+
+export const ReviewComment = styled.p``
+
+export const NoReviewsMessage = styled.p`
+  margin-top: 2rem;
 `

@@ -8,7 +8,7 @@ export default function About() {
 
       <S.Content>
         <S.Title>
-          Don’t squeeze in a sedan when you could relax in a van.
+          Don&apos;t squeeze in a sedan when you could relax in a van.
         </S.Title>
         <S.Paragraph>
           Our mission is to enliven your road trip with the perfect travel van

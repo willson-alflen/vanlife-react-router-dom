@@ -4,7 +4,7 @@ import { fetchVanById } from '../../api'
 import VanRating from '../../components/VanRating'
 import VanLoadingSpinner from '../../components/VanLoadingSpinner'
 import * as S from './styles'
-import ArrowLeft from '../../assets/images/arrow-left.png'
+import { FaArrowLeftLong, FaRegCircleUser, FaRegStar } from 'react-icons/fa6'
 
 export default function VanDetail() {
   const { id } = useParams()
@@ -60,7 +60,7 @@ export default function VanDetail() {
           relative="path"
           aria-label={`Back to ${type} vans`}
         >
-          <img src={ArrowLeft} alt="" />
+          <FaArrowLeftLong />
           Back to {type} vans
         </S.StyledMenuLink>
         {van !== null && (
@@ -80,6 +80,46 @@ export default function VanDetail() {
                 Rent this van
               </S.StyledLink>
             </S.VanInfo>
+            <S.VanReviews>
+              <h2>Reviews</h2>
+              <S.ReviewList>
+                {van.reviews.length === 0 ? (
+                  <S.NoReviewsMessage>
+                    Be the first to review this van!{' '}
+                    <span role="img" aria-label="smiling face">
+                      😊
+                    </span>
+                  </S.NoReviewsMessage>
+                ) : (
+                  van.reviews.map((review) => (
+                    <S.ReviewItem key={review.id}>
+                      <S.ReviewAuthor>
+                        {review.avatar === 'anonymous' ? (
+                          <FaRegCircleUser className="avatar" />
+                        ) : (
+                          <img
+                            src={review.avatar}
+                            alt={`${review.author}'s avatar`}
+                            className="avatar"
+                          />
+                        )}
+                      </S.ReviewAuthor>
+                      <S.ReviewContent>
+                        <S.ReviewRating>
+                          <FaRegStar className="star-icon" />
+                          <span>{review.rating}</span>/10
+                        </S.ReviewRating>
+                        <S.ReviewComment>
+                          {review.comment !== ''
+                            ? review.comment
+                            : `The user didn't leave a comment.`}
+                        </S.ReviewComment>
+                      </S.ReviewContent>
+                    </S.ReviewItem>
+                  ))
+                )}
+              </S.ReviewList>
+            </S.VanReviews>
           </S.VanDetail>
         )}
       </S.VanDetailWrapper>

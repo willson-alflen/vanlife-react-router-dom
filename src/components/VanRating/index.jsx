@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import ReactStars from 'react-rating-stars-component'
 import { rateVan, getVanRating, addUserRatedVan } from '../../api'
 import PropTypes from 'prop-types'
+import { v4 as uuidv4 } from 'uuid'
 import { FaRegStar } from 'react-icons/fa'
 import * as S from './styles'
 
@@ -16,7 +17,13 @@ export default function VanRating({ vanId }) {
   const [currentVanRating, setCurrentVanRating] = useState(null)
   const { user } = useContext(UserContext)
   const userHasRated = ratedVans.includes(vanId)
-  const [userRating, setUserRating] = useState(0)
+  const [userReview, setUserReview] = useState({
+    reviewId: uuidv4(),
+    userId: user.uid,
+    avatar: user.photoURL ? user.photoURL : 'anonymous',
+    rating: 0,
+    comment: '',
+  })
   const ratedStyles = {
     backgroundColor: '#ffd700',
     color: '#1f1f1f',
@@ -36,7 +43,7 @@ export default function VanRating({ vanId }) {
     }
 
     try {
-      await rateVan(vanId, userRating)
+      await rateVan(vanId, userReview)
       await addUserRatedVan(user.uid, vanId)
       addRatedVan(vanId)
       setIsOpen(false)
@@ -102,14 +109,23 @@ export default function VanRating({ vanId }) {
             <S.ModalTitle>Rate this van</S.ModalTitle>
             <ReactStars
               count={10}
-              value={userRating}
-              onChange={(newRating) => setUserRating(newRating)}
+              value={userReview.rating}
+              onChange={(newRating) =>
+                setUserReview({ ...userReview, rating: newRating })
+              }
               size={36}
               activeColor="#ffd700"
               a11y={true}
             />
+            <S.ModalComment
+              placeholder="Leave a comment (optional)"
+              value={userReview.comment}
+              onChange={(e) =>
+                setUserReview({ ...userReview, comment: e.target.value })
+              }
+            />
             <S.ModalButtonRate
-              style={userRating !== 0 ? ratedStyles : null}
+              style={userReview.rating !== 0 ? ratedStyles : null}
               onClick={() => handleRating()}
             >
               Rate
