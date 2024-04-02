@@ -31,13 +31,13 @@ export const ReviewList = styled.ul`
 
 export const ReviewItem = styled.li`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 2rem;
   list-style-type: none;
   background-color: white;
   margin-bottom: 15px;
   padding-block: 2rem;
-  padding-left: 1.5rem;
+  padding-inline: 1.5rem;
   border-radius: 6px;
 `
 
@@ -47,7 +47,16 @@ export const ReviewAuthor = styled.div`
   }
 `
 
-export const ReviewContent = styled.div``
+export const ReviewContent = styled.div`
+  flex: 1;
+`
+
+export const ReviewVan = styled.div`
+  img {
+    width: 5rem;
+    border-radius: 6px;
+  }
+`
 
 export const ReviewRating = styled.p`
   margin-bottom: 0.5rem;

@@ -11,7 +11,7 @@ import * as S from './styles'
 
 Modal.setAppElement('#root')
 
-export default function VanRating({ vanId }) {
+export default function VanRating({ vanId, imageUrl }) {
   const [modalIsOpen, setIsOpen] = useState(false)
   const { ratedVans, addRatedVan } = useContext(UserContext)
   const [currentVanRating, setCurrentVanRating] = useState(null)
@@ -19,8 +19,9 @@ export default function VanRating({ vanId }) {
   const userHasRated = ratedVans.includes(vanId)
   const [userReview, setUserReview] = useState({
     reviewId: uuidv4(),
-    userId: user.uid,
-    avatar: user.photoURL ? user.photoURL : 'anonymous',
+    userId: user ? user.uid : 'anonymous',
+    avatar: user && user.photoURL ? user.photoURL : 'anonymous',
+    vanImageUrl: imageUrl,
     rating: 0,
     comment: '',
   })
@@ -142,4 +143,5 @@ export default function VanRating({ vanId }) {
 
 VanRating.propTypes = {
   vanId: PropTypes.string,
+  imageUrl: PropTypes.string,
 }

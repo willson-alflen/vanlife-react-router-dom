@@ -71,7 +71,7 @@ export default function VanDetail() {
                 {van.type}
               </S.VanType>
               <S.VanName>{van.name}</S.VanName>
-              <VanRating vanId={id} />
+              <VanRating vanId={id} imageUrl={van.imageUrl} />
               <S.VanPrice>
                 <span>${van.price}</span>/day
               </S.VanPrice>

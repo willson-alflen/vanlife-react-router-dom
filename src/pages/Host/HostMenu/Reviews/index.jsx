@@ -65,6 +65,9 @@ export default function Reviews() {
                     : `The user didn't leave a comment.`}
                 </S.ReviewComment>
               </S.ReviewContent>
+              <S.ReviewVan>
+                <img src={review.vanImageUrl} />
+              </S.ReviewVan>
             </S.ReviewItem>
           ))}
         </S.ReviewList>
