@@ -35,6 +35,7 @@ setPersistence(auth, browserLocalPersistence)
 const vansCollection = collection(db, 'vans')
 const usersCollection = collection(db, 'users')
 
+/*=== VAN RELATED FUNCTIONS ==============================================*/
 export async function fetchAllVans() {
   try {
     const snapshot = await getDocs(vansCollection)
@@ -83,6 +84,7 @@ export async function fetchHostSingleVan(id) {
   }
 }
 
+/*=== USER RELATED FUNCTIONS ==============================================*/
 export async function loginUser(creds) {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -216,6 +218,17 @@ export async function getHostVanReviews(hostId) {
     return vans
       .filter((van) => van.hostId === hostId)
       .flatMap((van) => van.reviews)
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+/*=== TRANSACTION RELATED FUNCTIONS ==============================================*/
+
+export async function rentVan(rentalData) {
+  try {
+    await addDoc(collection(db, 'rentals'), rentalData)
+    return { success: true }
   } catch (error) {
     throw new Error(error.message)
   }

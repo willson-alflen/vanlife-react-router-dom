@@ -29,7 +29,7 @@ export default function VanDetail() {
         setIsLoading(false)
       }
     }, 1000)
-  }, [id])
+  }, [id, location])
 
   if (isLoading) {
     return <VanLoadingSpinner />
@@ -76,7 +76,11 @@ export default function VanDetail() {
                 <span>${van.price}</span>/day
               </S.VanPrice>
               <S.VanDescription>{van.description}</S.VanDescription>
-              <S.StyledLink to="/rent" aria-label="Go to rental page">
+              <S.StyledLink
+                to="rent"
+                state={{ id, van }}
+                aria-label="Go to rental page"
+              >
                 Rent this van
               </S.StyledLink>
             </S.VanInfo>
