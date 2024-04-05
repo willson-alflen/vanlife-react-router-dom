@@ -2,23 +2,31 @@ import { useEffect, useState } from 'react'
 import { addVan, auth } from '../../../../api'
 import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { toast } from 'react-toastify'
+import * as Yup from 'yup'
 import * as S from './styles'
 
 export default function AddVan() {
   const storage = getStorage()
   const [vanData, setVanData] = useState({
-    name: '',
+    vanName: '',
     type: '',
     price: '',
     imageUrl: null,
     description: '',
   })
   const [imageUploaded, setImageUploaded] = useState(false)
-  const [error, setError] = useState(null)
   const imageLabelStyles = {
     backgroundColor: 'lightgreen',
     color: '#fff',
   }
+
+  const validationSchema = Yup.object().shape({
+    vanName: Yup.string().required('Van name is required'),
+    type: Yup.string().required('Van type is required'),
+    price: Yup.number().required('Price is required'),
+    imageUrl: Yup.mixed().required('Image is required'),
+    description: Yup.string().required('Description is required'),
+  })
 
   function handleFormChange(event) {
     const { files, name, value } = event.target
@@ -31,9 +39,11 @@ export default function AddVan() {
     event.preventDefault()
 
     try {
+      await validationSchema.validate(vanData, { abortEarly: false })
+
       const currentUser = auth.currentUser
       if (!currentUser) {
-        setError('You must be logged in to list a van')
+        toast.error('You must be logged in to list a van')
         return
       }
 
@@ -55,16 +65,18 @@ export default function AddVan() {
       })
       toast.success('Your van has been listed successfully!')
       clearForm()
-      setError(null)
     } catch (err) {
-      setError(err)
-      toast.error('Failed to list your van. Please try again later.')
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          toast.error(error.message)
+        })
+      }
     }
   }
 
   function clearForm() {
     setVanData({
-      name: '',
+      vanName: '',
       type: '',
       price: '',
       imageUrl: null,
@@ -80,39 +92,40 @@ export default function AddVan() {
 
   return (
     <S.AddVanSection>
-      {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-
       <S.AddVanTitle>Van Info</S.AddVanTitle>
 
       <S.AddVanForm onSubmit={handleFormSubmit}>
-        <S.AddVanLabel htmlFor="van-name">Name:</S.AddVanLabel>
+        <S.AddVanLabel htmlFor="van-name">
+          Van name: <span style={{ color: 'red' }}>*</span>
+        </S.AddVanLabel>
         <S.AddVanInput
           type="text"
           id="van-name"
-          name="name"
-          value={vanData.name}
+          name="van-name"
+          value={vanData.vanName}
           onChange={handleFormChange}
-          required
         />
 
-        <S.AddVanLabel htmlFor="van-type">Van Type:</S.AddVanLabel>
+        <S.AddVanLabel htmlFor="van-type">
+          Van Type: <span style={{ color: 'red' }}>*</span>
+        </S.AddVanLabel>
         <S.AddVanInput
           type="text"
           id="van-type"
           name="type"
           value={vanData.type}
           onChange={handleFormChange}
-          required
         />
 
-        <S.AddVanLabel htmlFor="van-price">Price:</S.AddVanLabel>
+        <S.AddVanLabel htmlFor="van-price">
+          Price: <span style={{ color: 'red' }}>*</span>
+        </S.AddVanLabel>
         <S.AddVanInput
           type="number"
           id="van-price"
           name="price"
           value={vanData.price}
           onChange={handleFormChange}
-          required
         />
 
         <S.AddVanImageLabel
@@ -129,13 +142,14 @@ export default function AddVan() {
           accept="image/*"
         />
 
-        <S.AddVanLabel htmlFor="van-description">Description:</S.AddVanLabel>
+        <S.AddVanLabel htmlFor="van-description">
+          Description: <span style={{ color: 'red' }}>*</span>
+        </S.AddVanLabel>
         <S.AddVanTextarea
           id="van-description"
           name="description"
           value={vanData.description}
           onChange={handleFormChange}
-          required
         />
 
         <S.AddVanButton type="submit">List your van</S.AddVanButton>
