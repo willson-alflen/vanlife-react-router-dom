@@ -17,6 +17,7 @@ export const Container = styled.div`
   -o-background-size: cover;
   background-size: cover;
   color: #fff;
+  margin: 25px 0 100px;
 `
 
 export const Title = styled.h1`
