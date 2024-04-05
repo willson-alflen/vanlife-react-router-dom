@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useWindowSize } from '@uidotdev/usehooks'
 import Confetti from 'react-confetti'
-import { toast } from 'react-toastify'
 import NotFound from '../NotFound'
 import * as S from './styles'
 
@@ -20,16 +19,13 @@ export default function SuccessfulPurchase() {
     }
 
     setShowConfetti(true)
+
     const timeout = setTimeout(() => {
       setShowConfetti(false)
     }, 6000)
 
     return () => clearTimeout(timeout)
   }, [transactionId])
-
-  useEffect(() => {
-    toast.success('You have successfully rent the van!')
-  }, [])
 
   if (!transactionId) {
     return <NotFound />

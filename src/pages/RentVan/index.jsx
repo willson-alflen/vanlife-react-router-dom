@@ -19,7 +19,7 @@ export default function RentVan() {
   const [submitting, setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     userInfo: {
-      userId: user?.uid,
+      userId: user?.uid ? user.uid : '',
       name: user?.name ? user.name : '',
       email: user?.email ? user.email : '',
     },
