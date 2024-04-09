@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../../UserContext'
 import { fetchHostVans } from '../../../api'
 import VanLoadingSpinner from '../../../components/VanLoadingSpinner'
+import PropTypes from 'prop-types'
 import * as S from './styles'
 
-export default function HostVans() {
+export default function HostVans({ pathname }) {
   const { user } = useContext(UserContext)
   const [hostVans, setHostVans] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -48,7 +49,7 @@ export default function HostVans() {
 
   if (fetchingError) {
     return (
-      <S.HostVansSection>
+      <S.HostVansWrapper>
         <S.ErrorMessage aria-live="assertive">
           {fetchingError.message}
         </S.ErrorMessage>
@@ -59,12 +60,12 @@ export default function HostVans() {
         >
           Go back to your dashboard
         </S.BackToHomeLink>
-      </S.HostVansSection>
+      </S.HostVansWrapper>
     )
   }
 
   return (
-    <S.HostVansSection>
+    <S.HostVansWrapper>
       {hostVansElements.length !== 0 && (
         <S.HostVansTitle>Your listed vans</S.HostVansTitle>
       )}
@@ -73,7 +74,7 @@ export default function HostVans() {
         {hostVansElements.length ? (
           hostVansElements
         ) : (
-          <S.NoVansMessage>
+          <S.NoVansMessage $path={pathname}>
             <S.NoVansText>You haven&apos;t listed any vans yet.</S.NoVansText>
             <S.StyledLink to="/host/add-van" className="list-a-van">
               List a van now!
@@ -81,6 +82,10 @@ export default function HostVans() {
           </S.NoVansMessage>
         )}
       </S.HostVansList>
-    </S.HostVansSection>
+    </S.HostVansWrapper>
   )
+}
+
+HostVans.propTypes = {
+  pathname: PropTypes.string,
 }

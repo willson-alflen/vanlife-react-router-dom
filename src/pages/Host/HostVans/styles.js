@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const HostVansSection = styled.section`
-  padding-inline: 2rem;
-`
+export const HostVansWrapper = styled.div``
 
 export const HostVansTitle = styled.h1`
-  padding-inline: 26px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #161616;
 `
 
 export const HostVansList = styled.ul`
@@ -61,10 +61,10 @@ export const ErrorMessage = styled.p`
 `
 
 export const NoVansMessage = styled.div`
-  min-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: ${(props) => (props.$path === '/host' ? '0' : '3rem 2rem')};
 `
 
 export const NoVansText = styled.p`

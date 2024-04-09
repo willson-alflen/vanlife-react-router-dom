@@ -234,6 +234,34 @@ export async function rentVan(rentalData) {
   }
 }
 
+export async function fetchUserRentals(userId) {
+  try {
+    const snapshot = await getDocs(collection(db, 'rentals'))
+    const rentals = snapshot.docs
+      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .filter((rental) => rental.renterId === userId)
+    return rentals
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function fetchHostRentedVans(hostId) {
+  try {
+    const snapshot = await getDocs(collection(db, 'rentals'))
+    const rentals = snapshot.docs
+      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .filter((rental) => rental.vanInfo.vanOwner === hostId)
+
+    const rentedVansIds = [
+      ...new Set(rentals.map((rental) => rental.vanInfo.vanId)),
+    ]
+    return rentedVansIds
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
 /* LEGACY CODE ========================================== */
 
 // export async function fetchAllVans() {

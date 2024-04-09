@@ -18,29 +18,30 @@ export default function RentVan() {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
-    userInfo: {
-      userId: user?.uid ? user.uid : '',
+    renterInfo: {
+      renterId: user?.uid ? user.uid : '',
       name: user?.name ? user.name : '',
       email: user?.email ? user.email : '',
     },
     vanInfo: {
       vanId: vanId,
+      vanOwner: van?.hostId ? van.hostId : '',
       pricePerDay: van?.price ? van.price : 0,
       pickup: '',
       dropoff: '',
-      totalDays: '',
+      totalDays: 0,
       message: '',
     },
     paymentInfo: {
       nameOnCard: '',
       purchaseDate: '',
-      purchaseCost: '',
+      purchaseCost: 0,
       transactionId: '',
     },
   })
 
   const validationSchema = Yup.object().shape({
-    userInfo: Yup.object().shape({
+    renterInfo: Yup.object().shape({
       name: Yup.string().required('Full name is required'),
       email: Yup.string().email('Invalid email').required('Email is required'),
     }),
@@ -69,42 +70,18 @@ export default function RentVan() {
         ...prevFormData,
         vanInfo: { ...prevFormData.vanInfo, totalDays },
       }))
-    }
-  }, [formData.vanInfo.pickup, formData.vanInfo.dropoff])
 
-  useEffect(() => {
-    if (formData.vanInfo.totalDays) {
-      const totalPrice =
-        formData.vanInfo.totalDays * formData.vanInfo.pricePerDay
+      const totalPrice = totalDays * formData.vanInfo.pricePerDay
       setFormData((prevFormData) => ({
         ...prevFormData,
         paymentInfo: { ...prevFormData.paymentInfo, purchaseCost: totalPrice },
       }))
     }
-  }, [formData.vanInfo.totalDays, formData.vanInfo.pricePerDay])
-
-  useEffect(() => {
-    if (submitting) {
-      const doAsyncWork = async () => {
-        try {
-          const res = await rentVan(formData)
-          if (res.success) {
-            navigate('/successful-purchase', {
-              state: { transactionId: formData.paymentInfo.transactionId },
-            })
-          } else {
-            toast.error('Rental process failed')
-          }
-        } catch (error) {
-          toast.error(error.message)
-        } finally {
-          setSubmitting(false)
-        }
-      }
-
-      doAsyncWork()
-    }
-  }, [formData, navigate, submitting])
+  }, [
+    formData.vanInfo.pickup,
+    formData.vanInfo.dropoff,
+    formData.vanInfo.pricePerDay,
+  ])
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
@@ -134,8 +111,6 @@ export default function RentVan() {
         return
       }
 
-      setSubmitting(true)
-
       setFormData((prevFormData) => ({
         ...prevFormData,
         paymentInfo: {
@@ -143,9 +118,12 @@ export default function RentVan() {
             ? paymentMethod.customer
             : prevFormData.paymentInfo.nameOnCard,
           purchaseDate: new Date().toISOString(),
+          purchaseCost: prevFormData.paymentInfo.purchaseCost,
           transactionId: paymentMethod.id,
         },
       }))
+
+      setSubmitting(true)
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         error.inner.forEach((err) => {
@@ -154,6 +132,29 @@ export default function RentVan() {
       }
     }
   }
+
+  useEffect(() => {
+    if (submitting) {
+      const doAsyncWork = async () => {
+        try {
+          const res = await rentVan(formData)
+          if (res.success) {
+            navigate('/successful-purchase', {
+              state: { transactionId: formData.paymentInfo.transactionId },
+            })
+          } else {
+            toast.error('Rental process failed')
+          }
+        } catch (error) {
+          toast.error(error.message)
+        } finally {
+          setSubmitting(false)
+        }
+      }
+
+      doAsyncWork()
+    }
+  }, [formData, navigate, submitting])
 
   return (
     <S.RentSection>
@@ -172,11 +173,11 @@ export default function RentVan() {
               type="text"
               id="name"
               name="name"
-              value={formData.userInfo.name}
+              value={formData.renterInfo.name}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  userInfo: { ...formData.userInfo, name: e.target.value },
+                  renterInfo: { ...formData.renterInfo, name: e.target.value },
                 })
               }
               required
@@ -190,11 +191,11 @@ export default function RentVan() {
               type="email"
               id="email"
               name="email"
-              value={formData.userInfo.email}
+              value={formData.renterInfo.email}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  userInfo: { ...formData.userInfo, email: e.target.value },
+                  renterInfo: { ...formData.renterInfo, email: e.target.value },
                 })
               }
               required
