@@ -56,7 +56,7 @@ export default function Income() {
       </S.TransactionsIncome>
 
       <S.TransactionList>
-        {userTransactions ? (
+        {userTransactions !== null && userTransactions.length !== 0 ? (
           <>
             <S.ListTitle>
               Your transactions ({userTransactions.length})
@@ -73,7 +73,10 @@ export default function Income() {
             ))}
           </>
         ) : (
-          <p>You don&apos;t have any income yet.</p>
+          <S.NoIncomeMessage>
+            <span>You&apos;ve got no transactions yet.</span>
+            Keep up with the good work!
+          </S.NoIncomeMessage>
         )}
       </S.TransactionList>
     </S.TransactionsWrapper>

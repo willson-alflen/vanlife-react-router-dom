@@ -60,3 +60,18 @@ export const TransactionItem = styled.li`
     font-size: 1.25rem;
   }
 `
+
+export const NoIncomeMessage = styled.p`
+  color: #ff8c38;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 3rem;
+
+  span {
+    display: block;
+    color: #161616;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+`
