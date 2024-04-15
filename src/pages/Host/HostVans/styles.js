@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const HostVansWrapper = styled.div``
+export const HostVansWrapper = styled.div`
+  padding: ${(props) => (props.$path === '/host' ? '0' : '0 2rem')};
+`
 
 export const HostVansTitle = styled.h1`
   font-size: 2rem;

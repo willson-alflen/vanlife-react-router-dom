@@ -6,7 +6,7 @@ import * as S from './styles'
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const typeFilter = searchParams.get('type')
+  const typeFilter = searchParams.get('type')?.toLowerCase() || ''
   const [vans, setVans] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [fetchingError, setFetchingError] = useState(null)
@@ -28,7 +28,7 @@ export default function Vans() {
   }, [])
 
   const displayedVans = typeFilter
-    ? vans.filter((van) => van.type === typeFilter)
+    ? vans.filter((van) => van.type.toLowerCase() === typeFilter)
     : vans
 
   const vanElements = displayedVans.map((van) => (
@@ -37,15 +37,17 @@ export default function Vans() {
         to={van.id}
         state={{ search: searchParams.toString(), type: typeFilter }}
       >
-        <S.VanImg src={van.imageUrl} alt={van.name} />
+        <S.VanImg src={van.imageUrl} alt={van.vanName} />
         <S.VanInfo>
-          <S.VanName>{van.name}</S.VanName>
+          <S.VanName>{van.vanName}</S.VanName>
           <S.VanPrice>
             ${van.price}
             <span>/day</span>
           </S.VanPrice>
         </S.VanInfo>
-        <S.VanType className={`van-type ${van.type}`}>{van.type}</S.VanType>
+        <S.VanType className={`van-type ${van.type.toLowerCase()}`}>
+          {van.type.toLowerCase()}
+        </S.VanType>
       </S.StyledLink>
     </S.VanCard>
   ))

@@ -66,11 +66,11 @@ export default function VanDetail() {
         {van !== null && (
           <S.VanDetail>
             <S.VanInfo>
-              <S.VanlImg src={van.imageUrl} alt={van.name} />
+              <S.VanlImg src={van.imageUrl} alt={van.vanName} />
               <S.VanType className={`van-type ${van.type}`}>
                 {van.type}
               </S.VanType>
-              <S.VanName>{van.name}</S.VanName>
+              <S.VanName>{van.vanName}</S.VanName>
               <VanRating vanId={id} imageUrl={van.imageUrl} />
               <S.VanPrice>
                 <span>${van.price}</span>/day

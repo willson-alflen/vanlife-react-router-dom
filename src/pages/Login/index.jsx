@@ -11,7 +11,7 @@ import * as S from './styles'
 export default function Login() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { user, setUser } = useContext(UserContext)
+  const { user, dispatch } = useContext(UserContext)
   const message = location.state?.message
   const [loginData, setLoginData] = useState({ email: '', password: '' })
   const [loginStatus, setLoginStatus] = useState('idle')
@@ -33,7 +33,7 @@ export default function Login() {
       .then((userCredential) => {
         if (userCredential) {
           setError(null)
-          setUser(userCredential.user)
+          dispatch({ type: 'SET_USER', user: userCredential.user })
           toast.success('You have successfully logged in!')
           navigate('/host', { replace: true })
         } else {
@@ -54,7 +54,7 @@ export default function Login() {
     signOut(auth)
       .then(() => {
         setShowConfetti(false)
-        setUser(null)
+        dispatch({ type: 'REMOVE_USER' })
         toast.success('You have successfully signed out!')
         navigate('/login', { replace: true })
       })

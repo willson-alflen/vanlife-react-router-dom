@@ -24,7 +24,9 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
-export const VanCard = styled.div``
+export const VanCard = styled.div`
+  margin-bottom: 1.5rem;
+`
 
 export const VanImg = styled.img`
   max-width: 100%;

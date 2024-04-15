@@ -5,7 +5,7 @@ import { UserContext } from '../../UserContext'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { rentVan } from '../../api'
+import { rentVan, findOwnerAndAddTransaction } from '../../api'
 import * as S from './styles'
 
 export default function RentVan() {
@@ -132,6 +132,16 @@ export default function RentVan() {
       }
     }
   }
+
+  useEffect(() => {
+    if (formData.paymentInfo.transactionId) {
+      findOwnerAndAddTransaction(formData.vanInfo.vanId, {
+        transactionId: formData.paymentInfo.transactionId,
+        purchaseCost: formData.paymentInfo.purchaseCost,
+        purchaseDate: formData.paymentInfo.purchaseDate,
+      })
+    }
+  }, [formData])
 
   useEffect(() => {
     if (submitting) {

@@ -25,7 +25,6 @@ export default function Signup() {
         if (userCredential) {
           setError(null)
           toast.success('You have successfully created an account')
-          console.log('User created:', userCredential.user)
           navigate('/login')
         } else {
           setError(new Error("Couldn't create user"))

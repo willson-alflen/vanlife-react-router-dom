@@ -1,40 +1,50 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useEffect, useReducer } from 'react'
 import { auth } from '../api'
-import VanLoadingSpinner from '../components/VanLoadingSpinner'
 import PropTypes from 'prop-types'
+
+const userReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_USER':
+      return { ...state, user: action.user }
+    case 'SET_RATED_VANS':
+      return { ...state, ratedVans: action.ratedVans }
+    case 'REMOVE_USER':
+      return { user: null, ratedVans: [] }
+    default:
+      throw new Error()
+  }
+}
 
 const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [ratedVans, setRatedVans] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [state, dispatch] = useReducer(userReducer, {
+    user: null,
+    ratedVans: [],
+  })
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        setUser(authUser)
-        setRatedVans(authUser.ratedVans || [])
+        dispatch({ type: 'SET_USER', user: authUser })
+        dispatch({
+          type: 'SET_RATED_VANS',
+          ratedVans: authUser.ratedVans || [],
+        })
       } else {
-        setUser(null)
-        setRatedVans([])
+        dispatch({ type: 'REMOVE_USER' })
       }
-      setIsLoading(false)
     })
 
     return () => unsubscribe()
   }, [])
 
   const addRatedVan = (vanId) => {
-    setRatedVans((prevRatedVans) => [...prevRatedVans, vanId])
-  }
-
-  if (isLoading) {
-    return <VanLoadingSpinner />
+    dispatch({ type: 'SET_RATED_VANS', ratedVans: [...state.ratedVans, vanId] })
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, ratedVans, addRatedVan }}>
+    <UserContext.Provider value={{ ...state, dispatch, addRatedVan }}>
       {children}
     </UserContext.Provider>
   )

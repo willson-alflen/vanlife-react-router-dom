@@ -103,3 +103,29 @@ export const AccountDataItem = styled.div`
     font-size: 0.9rem;
   }
 `
+
+export const AccountDanger = styled.div`
+  background-color: lightcoral;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  margin-top: 3rem;
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: white;
+
+    span {
+      color: purple;
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+`

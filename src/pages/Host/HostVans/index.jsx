@@ -43,13 +43,19 @@ export default function HostVans({ pathname }) {
     </S.StyledLink>
   ))
 
-  if (isLoading) {
+  if (pathname !== '/host' && isLoading) {
     return <VanLoadingSpinner />
+  } else if (isLoading) {
+    return (
+      <p style={{ fontWeight: '500', minHeight: '5rem' }}>
+        Loading your vans...
+      </p>
+    )
   }
 
   if (fetchingError) {
     return (
-      <S.HostVansWrapper>
+      <S.HostVansWrapper $path={pathname}>
         <S.ErrorMessage aria-live="assertive">
           {fetchingError.message}
         </S.ErrorMessage>
@@ -65,7 +71,7 @@ export default function HostVans({ pathname }) {
   }
 
   return (
-    <S.HostVansWrapper>
+    <S.HostVansWrapper $path={pathname}>
       {hostVansElements.length !== 0 && (
         <S.HostVansTitle>Your listed vans</S.HostVansTitle>
       )}

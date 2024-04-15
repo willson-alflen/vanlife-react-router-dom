@@ -13,6 +13,7 @@ export default function AddVan() {
     price: '',
     imageUrl: null,
     description: '',
+    reviews: [],
   })
   const [imageUploaded, setImageUploaded] = useState(false)
   const imageLabelStyles = {
@@ -82,6 +83,7 @@ export default function AddVan() {
       imageUrl: null,
       description: '',
     })
+    setImageUploaded(false)
   }
 
   useEffect(() => {
@@ -101,7 +103,7 @@ export default function AddVan() {
         <S.AddVanInput
           type="text"
           id="van-name"
-          name="van-name"
+          name="vanName"
           value={vanData.vanName}
           onChange={handleFormChange}
         />
@@ -118,7 +120,7 @@ export default function AddVan() {
         />
 
         <S.AddVanLabel htmlFor="van-price">
-          Price: <span style={{ color: 'red' }}>*</span>
+          Price ($): <span style={{ color: 'red' }}>*</span>
         </S.AddVanLabel>
         <S.AddVanInput
           type="number"

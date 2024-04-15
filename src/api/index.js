@@ -5,6 +5,7 @@ import {
   doc,
   addDoc,
   getDoc,
+  deleteDoc,
   getDocs,
   setDoc,
   updateDoc,
@@ -20,10 +21,11 @@ import {
 const firebaseConfig = {
   apiKey: 'AIzaSyBJbRfBLeXbhNNksDlO5v_uTgMpRZhiAvI',
   authDomain: 'vanlife-28669.firebaseapp.com',
+  databaseURL: 'https://vanlife-28669-default-rtdb.firebaseio.com',
   projectId: 'vanlife-28669',
   storageBucket: 'vanlife-28669.appspot.com',
   messagingSenderId: '771541759606',
-  appId: '1:771541759606:web:0de75f6ca1de2bea945157',
+  appId: '1:771541759606:web:09ea22c1e9b72b7a945157',
 }
 
 const app = initializeApp(firebaseConfig)
@@ -110,11 +112,71 @@ export async function registerUser(creds) {
       email: userCredential.user.email,
       uid: userCredential.user.uid,
       ratedVans: [],
+      transactions: [],
     }
 
     await setDoc(doc(usersCollection, userCredential.user.uid), userData)
 
     return userCredential
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function removeUser(userId) {
+  try {
+    await deleteDoc(doc(usersCollection, userId))
+
+    const user = auth.currentUser
+
+    if (user) {
+      await user.delete()
+    }
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function getUserTransactions(userId) {
+  try {
+    const userRef = doc(usersCollection, userId)
+    const userDoc = await getDoc(userRef)
+
+    if (!userDoc.exists) {
+      throw new Error('User not found')
+    }
+
+    const userData = userDoc.data()
+
+    if (!userData.transactions || !Array.isArray(userData.transactions)) {
+      return []
+    }
+
+    return userData.transactions
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function calcAverageUserRatings(userId) {
+  try {
+    const snapshot = await getDocs(vansCollection)
+    const vans = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    const userVans = vans.filter((van) => van.hostId === userId)
+
+    if (userVans.length === 0) {
+      return 0
+    }
+
+    let totalRating = 0
+    userVans.forEach((van) => {
+      const rating = van.rating || 0
+      totalRating += rating
+    })
+
+    const averageRating = totalRating / userVans.length
+
+    return averageRating
   } catch (error) {
     throw new Error(error.message)
   }
@@ -257,6 +319,44 @@ export async function fetchHostRentedVans(hostId) {
       ...new Set(rentals.map((rental) => rental.vanInfo.vanId)),
     ]
     return rentedVansIds
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+export async function findOwnerAndAddTransaction(vanId, transactionData) {
+  try {
+    const vanDoc = await getDoc(doc(db, 'vans', vanId))
+
+    if (!vanDoc.exists()) {
+      throw new Error('Van not found')
+    }
+
+    const vanData = vanDoc.data()
+
+    if (!vanData) {
+      throw new Error('Van data not available')
+    }
+
+    const hostId = vanData.hostId
+    const hostRef = doc(usersCollection, hostId)
+    const hostDoc = await getDoc(hostRef)
+
+    if (!hostDoc.exists()) {
+      throw new Error('Host not found')
+    }
+
+    const hostData = hostDoc.data()
+
+    if (!hostData) {
+      throw new Error('Host data not available')
+    }
+
+    const transactions = Array.isArray(hostData.transactions)
+      ? [...hostData.transactions, transactionData]
+      : [transactionData]
+
+    await updateDoc(hostRef, { transactions })
   } catch (error) {
     throw new Error(error.message)
   }
