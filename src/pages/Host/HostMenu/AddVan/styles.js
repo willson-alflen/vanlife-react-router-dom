@@ -6,15 +6,13 @@ export const AddVanSection = styled.section`
   flex-direction: column;
   align-items: center;
   margin-bottom: 5rem;
+
+  @media (max-width: 648px) {
+    padding-inline: 1rem;
+  }
 `
 
 export const AddVanTitle = styled.h1`
-  margin-bottom: 3rem;
-`
-
-export const ErrorMessage = styled.h2`
-  color: red;
-  font-size: 2rem;
   margin-bottom: 3rem;
 `
 
@@ -28,6 +26,10 @@ export const AddVanForm = styled.form`
 
 export const AddVanLabel = styled.label`
   margin-bottom: -0.5rem;
+
+  @media (max-width: 548px) {
+    font-size: 0.9rem;
+  }
 `
 
 export const AddVanImageLabel = styled.label`
@@ -39,6 +41,10 @@ export const AddVanImageLabel = styled.label`
   outline: none;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
   margin: 0.5rem 0;
+
+  @media (max-width: 548px) {
+    font-size: 0.9rem;
+  }
 `
 
 export const AddVanInput = styled.input`
@@ -50,6 +56,10 @@ export const AddVanInput = styled.input`
   padding: 1rem;
   outline: none;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 548px) {
+    padding: 0.75rem;
+  }
 `
 
 export const AddVanInputFile = styled.input`
@@ -87,5 +97,9 @@ export const AddVanButton = styled.button`
 
   &:hover {
     transform: translate(1px, 1px);
+  }
+
+  @media (max-width: 548px) {
+    padding: 1rem;
   }
 `

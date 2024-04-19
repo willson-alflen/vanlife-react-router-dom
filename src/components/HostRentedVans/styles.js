@@ -7,6 +7,10 @@ export const HostRentedVansTitle = styled.h1`
   font-weight: 700;
   color: #161616;
   margin-bottom: 2rem;
+
+  @media (max-width: 548px) {
+    font-size: 1.5rem;
+  }
 `
 
 export const HostRentedVansList = styled.ul`
@@ -44,9 +48,14 @@ export const VanPrice = styled.p`
 export const NoRentedVansMessage = styled.p`
   background-color: rgba(255, 234, 208, 0.5);
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 600;
   color: red;
   padding: 1rem 2rem;
   margin-bottom: 1rem;
   border-radius: 6px;
+
+  @media (max-width: 548px) {
+    font-size: 1rem;
+    padding: 1rem;
+  }
 `

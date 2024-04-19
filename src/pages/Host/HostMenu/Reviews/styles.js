@@ -23,6 +23,18 @@ export const NoReviewsText = styled.p`
     font-weight: bold;
     margin-bottom: 1rem;
   }
+
+  @media (max-width: 648px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 548px) {
+    font-size: 1.5rem;
+
+    span {
+      font-size: 0.9rem;
+    }
+  }
 `
 
 export const ReviewList = styled.ul`

@@ -18,18 +18,35 @@ export const Container = styled.div`
   background-size: cover;
   color: #fff;
   margin: 25px 0 100px;
+
+  @media (max-width: 548px) {
+    padding: 2rem;
+  }
 `
 
 export const Title = styled.h1`
   font-weight: 700;
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   line-height: 42px;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2.25rem;
+  }
+
+  @media (max-width: 548px) {
+    font-size: 2rem;
+    text-align: center;
+  }
 `
 
 export const SubTitle = styled.p`
   line-height: 24px;
   margin-bottom: 2rem;
+
+  @media (max-width: 548px) {
+    text-align: center;
+  }
 `
 
 export const StyledLink = styled(Link)`

@@ -13,6 +13,8 @@ import {
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   setPersistence,
   browserLocalPersistence,
@@ -123,15 +125,20 @@ export async function registerUser(creds) {
   }
 }
 
-export async function removeUser(userId) {
+export async function removeUser(userId, password) {
   try {
-    await deleteDoc(doc(usersCollection, userId))
-
     const user = auth.currentUser
 
-    if (user) {
-      await user.delete()
+    if (!user) {
+      throw new Error('User not signed in.')
     }
+
+    const credential = EmailAuthProvider.credential(user.email, password)
+
+    await reauthenticateWithCredential(user, credential)
+
+    await deleteDoc(doc(usersCollection, userId))
+    await user.delete()
   } catch (error) {
     throw new Error(error.message)
   }

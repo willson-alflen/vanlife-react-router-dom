@@ -3,12 +3,24 @@ import { Link } from 'react-router-dom'
 
 export const HostVansWrapper = styled.div`
   padding: ${(props) => (props.$path === '/host' ? '0' : '0 2rem')};
+  min-height: ${(props) => (props.$path === '/host' ? '0' : '50vh')};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (max-width: 648px) {
+    padding: ${(props) => (props.$path === '/host' ? '0' : '0 1rem')};
+  }
 `
 
 export const HostVansTitle = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   color: #161616;
+
+  @media (max-width: 548px) {
+    font-size: 1.5rem;
+  }
 `
 
 export const HostVansList = styled.ul`
@@ -29,6 +41,10 @@ export const VanImage = styled.img`
   height: 100px;
   border-radius: 6px;
   margin-right: 16px;
+
+  @media (max-width: 548px) {
+    height: 75px;
+  }
 `
 
 export const VanInfo = styled.div``
@@ -52,6 +68,10 @@ export const StyledLink = styled(Link)`
     font-size: 2.5rem;
     font-weight: bold;
     text-decoration: underline;
+
+    @media (max-width: 548px) {
+      font-size: 2rem;
+    }
   }
 `
 
@@ -72,6 +92,10 @@ export const NoVansMessage = styled.div`
 export const NoVansText = styled.p`
   font-weight: bold;
   margin-bottom: 1rem;
+
+  @media (max-width: 548px) {
+    font-size: 0.9rem;
+  }
 `
 
 export const BackToHomeLink = styled(Link)`

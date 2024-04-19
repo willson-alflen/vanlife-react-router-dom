@@ -7,6 +7,10 @@ export const DashboardContainer = styled.div`
 export const SectionHeader = styled.section`
   padding: 3rem 2rem;
   background-color: #ffead0;
+
+  @media (max-width: 648px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 export const HeaderTitle = styled.h1`
@@ -14,6 +18,10 @@ export const HeaderTitle = styled.h1`
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 2rem;
+
+  @media (max-width: 648px) {
+    font-size: 1.75rem;
+  }
 `
 
 export const HeaderBody = styled.div``
@@ -33,6 +41,14 @@ export const HeaderText = styled.p`
     color: #161616;
     font-weight: 900;
   }
+
+  @media (max-width: 648px) {
+    font-size: 0.9rem;
+
+    &.income {
+      font-size: 3.25rem;
+    }
+  }
 `
 
 export const SectionScore = styled.section`
@@ -41,12 +57,20 @@ export const SectionScore = styled.section`
   gap: 0.9rem;
   background-color: #ffddb2;
   padding: 3rem 2rem;
+
+  @media (max-width: 648px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 export const ScoreTitle = styled.h2`
   color: #161616;
   font-size: 1.5rem;
   font-weight: 700;
+
+  @media (max-width: 648px) {
+    font-size: 1.25rem;
+  }
 `
 
 export const ScoreBody = styled.div``
@@ -64,14 +88,26 @@ export const ScoreText = styled.div`
 
 export const SectionVans = styled.section`
   padding: 3rem 2rem;
+
+  @media (max-width: 648px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 export const SectionRentedVans = styled.section`
   padding: 3rem 2rem;
+
+  @media (max-width: 648px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 export const SectionAccount = styled.section`
   padding: 3rem 2rem;
+
+  @media (max-width: 648px) {
+    padding: 1.5rem 1rem;
+  }
 `
 
 export const AccountTitle = styled.h2`
@@ -79,6 +115,10 @@ export const AccountTitle = styled.h2`
   font-weight: 700;
   color: #161616;
   margin-bottom: 2rem;
+
+  @media (max-width: 648px) {
+    font-size: 1.5rem;
+  }
 `
 
 export const AccountData = styled.div``
@@ -101,6 +141,17 @@ export const AccountDataItem = styled.div`
 
   legend {
     font-size: 0.9rem;
+  }
+
+  @media (max-width: 648px) {
+    padding: 1rem;
+    span {
+      font-size: 1rem;
+    }
+
+    legend {
+      font-size: 0.75rem;
+    }
   }
 `
 
@@ -126,6 +177,19 @@ export const AccountDanger = styled.div`
       font-weight: 700;
       text-decoration: underline;
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 648px) {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
     }
   }
 `

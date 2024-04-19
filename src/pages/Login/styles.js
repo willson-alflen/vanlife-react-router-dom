@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const SectionWrapper = styled.section`
-  height: calc(100vh - 100px);
+  height: calc(100vh - 200px);
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -91,6 +91,10 @@ export const LoginInput = styled.input`
   &:last-of-type {
     margin-bottom: 1.5rem;
   }
+
+  @media (max-width: 548px) {
+    padding: 0.75rem;
+  }
 `
 
 export const LoginButton = styled.button`
@@ -111,6 +115,10 @@ export const LoginButton = styled.button`
   &:hover {
     transform: translate(1px, 1px);
   }
+
+  @media (max-width: 548px) {
+    padding: 1rem;
+  }
 `
 
 export const LoginSpan = styled.span`
@@ -121,9 +129,17 @@ export const LoginSpan = styled.span`
   @media (max-width: 768px) {
     text-align: center;
   }
+
+  @media (max-width: 548px) {
+    font-size: 0.9rem;
+  }
 `
 
 export const LoginLink = styled(Link)`
   color: #ff8c38;
   font-weight: bold;
+
+  @media (max-width: 548px) {
+    display: block;
+  }
 `

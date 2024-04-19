@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from 'react'
+import { createContext, useEffect, useReducer, useState } from 'react'
 import { auth } from '../api'
 import PropTypes from 'prop-types'
 
@@ -22,6 +22,7 @@ const UserProvider = ({ children }) => {
     user: null,
     ratedVans: [],
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -34,6 +35,7 @@ const UserProvider = ({ children }) => {
       } else {
         dispatch({ type: 'REMOVE_USER' })
       }
+      setIsLoading(false)
     })
 
     return () => unsubscribe()
@@ -44,7 +46,9 @@ const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ ...state, dispatch, addRatedVan }}>
+    <UserContext.Provider
+      value={{ ...state, isLoading, dispatch, addRatedVan }}
+    >
       {children}
     </UserContext.Provider>
   )

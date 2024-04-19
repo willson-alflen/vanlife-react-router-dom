@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 export const Nav = styled.nav`
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin: 3rem 0 3rem 2rem;
+  margin: 3rem 2rem;
 `
 
 export const StyledLink = styled(NavLink)`

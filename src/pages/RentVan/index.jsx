@@ -169,7 +169,7 @@ export default function RentVan() {
   return (
     <S.RentSection>
       <S.RentTitle>
-        Rent <span>{van.name}</span> van
+        Rent <span>{van.vanName}</span> van
       </S.RentTitle>
       <S.RentForm onSubmit={(e) => handleFormSubmit(e)}>
         {/*========= USER INFO SECTION =========*/}
@@ -190,7 +190,6 @@ export default function RentVan() {
                   renterInfo: { ...formData.renterInfo, name: e.target.value },
                 })
               }
-              required
             />
           </S.RentFormGroup>
           <S.RentFormGroup>
@@ -208,7 +207,6 @@ export default function RentVan() {
                   renterInfo: { ...formData.renterInfo, email: e.target.value },
                 })
               }
-              required
             />
           </S.RentFormGroup>
         </S.RentFormSection>
@@ -231,7 +229,6 @@ export default function RentVan() {
                   vanInfo: { ...formData.vanInfo, pickup: e.target.value },
                 })
               }
-              required
             />
           </S.RentFormGroup>
           <S.RentFormGroup>
@@ -249,7 +246,6 @@ export default function RentVan() {
                   vanInfo: { ...formData.vanInfo, dropoff: e.target.value },
                 })
               }
-              required
             />
           </S.RentFormGroup>
           <S.RentFormGroup>
@@ -301,7 +297,6 @@ export default function RentVan() {
                   },
                 })
               }
-              required
             />
           </S.RentFormGroup>
           <S.RentFormGroup>

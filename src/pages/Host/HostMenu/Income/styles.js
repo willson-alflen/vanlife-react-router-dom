@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const TransactionsWrapper = styled.div`
   padding: 0 2rem;
   margin-bottom: 5rem;
+
+  @media (max-width: 648px) {
+    padding: 0 1rem;
+  }
 `
 
 export const TransactionsTitle = styled.h2`
@@ -10,16 +14,25 @@ export const TransactionsTitle = styled.h2`
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 2rem;
+
+  @media (max-width: 648px) {
+    font-size: 2rem;
+  }
 `
 
 export const TransactionsIncome = styled.div`
   color: #4d4d4d;
   font-size: 1rem;
   margin-bottom: 4rem;
+
+  @media (max-width: 648px) {
+    font-size: 0.9rem;
+  }
 `
 
 export const IncomeText = styled.p`
   margin-bottom: 2rem;
+
   span {
     font-weight: 700;
     text-decoration: underline;
@@ -30,6 +43,10 @@ export const IncomeValue = styled.p`
   font-size: 4rem;
   color: #161616;
   font-weight: 900;
+
+  @media (max-width: 648px) {
+    font-size: 3.25rem;
+  }
 `
 
 export const TransactionList = styled.ul``
@@ -73,5 +90,13 @@ export const NoIncomeMessage = styled.p`
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 1rem;
+  }
+
+  @media (max-width: 648px) {
+    font-size: 2rem;
+
+    span {
+      font-size: 0.9rem;
+    }
   }
 `

@@ -20,20 +20,28 @@ export default function Dashboard() {
   const [userRating, setUserRating] = useState(0)
 
   async function handleUserRemove() {
-    const confirm = window.confirm(
-      'Are you sure you want to delete your account? This action cannot be undone.'
+    const password = window.prompt(
+      'Please enter your password for verification:'
     )
 
-    if (confirm) {
-      try {
-        await removeUser(user.uid)
-        toast.success('Your account has been deleted.')
-        dispatch({ type: 'REMOVE_USER' })
-        navigate('/')
-      } catch (error) {
-        console.log('Error deleting user: ', error)
-        toast.error('An error occurred. Please try again later.')
+    if (password) {
+      const confirm = window.confirm(
+        'Are you sure you want to delete your account? This action cannot be undone.'
+      )
+
+      if (confirm) {
+        try {
+          await removeUser(user.uid, password)
+          toast.success('Your account has been deleted.')
+          dispatch({ type: 'REMOVE_USER' })
+          navigate('/')
+        } catch (error) {
+          console.log('Error deleting user: ', error)
+          toast.error('An error occurred. Please try again later.')
+        }
       }
+    } else {
+      toast.error('Password is required for account deletion.')
     }
   }
 
