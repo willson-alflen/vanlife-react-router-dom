@@ -62,6 +62,7 @@ export const TransactionItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
   border-radius: 6px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
 
@@ -75,6 +76,34 @@ export const TransactionItem = styled.li`
 
   .right {
     font-size: 1.25rem;
+  }
+
+  @media (max-width: 648px) {
+    padding: 1.5rem;
+
+    .left {
+      span {
+        font-size: 2rem;
+      }
+    }
+
+    .right {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    padding: 1rem;
+
+    .left {
+      span {
+        font-size: 1.75rem;
+      }
+    }
+
+    .right {
+      font-size: 0.9rem;
+    }
   }
 `
 
