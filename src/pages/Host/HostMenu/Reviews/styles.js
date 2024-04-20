@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const ReviewsSection = styled.section`
   padding-inline: 2rem;
+  margin-bottom: 5rem;
 `
 
 export const NoReviewsMessage = styled.div`
@@ -37,6 +38,17 @@ export const NoReviewsText = styled.p`
   }
 `
 
+export const ReviewsSectionTitle = styled.h2`
+  color: #161616;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+
+  @media (max-width: 648px) {
+    font-size: 2rem;
+  }
+`
+
 export const ReviewList = styled.ul`
   margin-block: 2rem;
 `
@@ -51,6 +63,10 @@ export const ReviewItem = styled.li`
   padding-block: 2rem;
   padding-inline: 1.5rem;
   border-radius: 6px;
+
+  @media (max-width: 648px) {
+    flex-direction: column;
+  }
 `
 
 export const ReviewAuthor = styled.div`
@@ -67,6 +83,12 @@ export const ReviewVan = styled.div`
   img {
     width: 5rem;
     border-radius: 6px;
+  }
+
+  @media (max-width: 648px) {
+    img {
+      width: 100%;
+    }
   }
 `
 
@@ -85,4 +107,8 @@ export const ReviewRating = styled.p`
   }
 `
 
-export const ReviewComment = styled.p``
+export const ReviewComment = styled.p`
+  @media (max-width: 648px) {
+    text-align: center;
+  }
+`

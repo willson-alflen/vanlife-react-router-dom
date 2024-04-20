@@ -40,37 +40,40 @@ export default function Reviews() {
           </S.NoReviewsText>
         </S.NoReviewsMessage>
       ) : (
-        <S.ReviewList>
-          {reviews.map((review) => (
-            <S.ReviewItem key={review.reviewId}>
-              <S.ReviewAuthor>
-                {review.avatar === 'anonymous' ? (
-                  <FaRegCircleUser className="avatar" />
-                ) : (
-                  <img
-                    src={review.avatar}
-                    alt={`${review.author}'s avatar`}
-                    className="avatar"
-                  />
-                )}
-              </S.ReviewAuthor>
-              <S.ReviewContent>
-                <S.ReviewRating>
-                  <FaRegStar className="star-icon" />
-                  <span>{review.rating}</span>/10
-                </S.ReviewRating>
-                <S.ReviewComment>
-                  {review.comment !== ''
-                    ? review.comment
-                    : `The user didn't leave a comment.`}
-                </S.ReviewComment>
-              </S.ReviewContent>
-              <S.ReviewVan>
-                <img src={review.vanImageUrl} />
-              </S.ReviewVan>
-            </S.ReviewItem>
-          ))}
-        </S.ReviewList>
+        <>
+          <S.ReviewsSectionTitle>Reviews</S.ReviewsSectionTitle>
+          <S.ReviewList>
+            {reviews.map((review) => (
+              <S.ReviewItem key={review.reviewId}>
+                <S.ReviewAuthor>
+                  {review.avatar === 'anonymous' ? (
+                    <FaRegCircleUser className="avatar" />
+                  ) : (
+                    <img
+                      src={review.avatar}
+                      alt={`${review.author}'s avatar`}
+                      className="avatar"
+                    />
+                  )}
+                </S.ReviewAuthor>
+                <S.ReviewContent>
+                  <S.ReviewRating>
+                    <FaRegStar className="star-icon" />
+                    <span>{review.rating}</span>/10
+                  </S.ReviewRating>
+                  <S.ReviewComment>
+                    {review.comment !== ''
+                      ? review.comment
+                      : `The user didn't leave a comment.`}
+                  </S.ReviewComment>
+                </S.ReviewContent>
+                <S.ReviewVan>
+                  <img src={review.vanImageUrl} />
+                </S.ReviewVan>
+              </S.ReviewItem>
+            ))}
+          </S.ReviewList>
+        </>
       )}
     </S.ReviewsSection>
   )
