@@ -48,3 +48,7 @@ In addition to the course content, the following enhancements were made:
 
 ### To view the project online
  [https://vanlife-react-router-dom.vercel.app/](https://vanlife-react-router-dom.vercel.app/)
+
+### To fully test the app
+For users intending to fully test the application, please note that full testing may require admin privileges due to Firebase Database's strict rules. Please get in touch with me to receive guidance on how to fully test the app.
+
